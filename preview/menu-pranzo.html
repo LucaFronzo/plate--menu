@@ -1,506 +1,510 @@
-<title>Good Morning Vietnam Pranzo</title>
+<title>Plateform Menu Shell</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap">
 <style>
-/* Layout: one continuous menu column (max 600px). Lacquer-red header, a frosted sticky category rail,
-   dish rows on a quiet paper ground; details open in a draggable bottom sheet. */
+/* Layout: a single reading column (max 620px). The restaurant's brand colour owns the header band;
+   everything below is a quiet container tinted by that hue, so any client's content sits in it. */
 :root {
-  --lacquer: #6E1410;        /* brand oxblood, from the logo */
-  --saffron: #F2A81D;        /* brand yellow */
-  --ground: #F7F5F1;
+  --h: 38;                                  /* brand hue, set from the client's colour */
+  --brand: #F5A81C;                         /* client colour, set by script */
+  --on-brand: #1E150A;
+  --accent-l: #8A5A00; --accent-d: #F5B84A; /* contrast-safe accent per theme, set by script */
+  --accent: var(--accent-l);
+  --on-accent: #FFFFFF;
+  --ground: hsl(var(--h) 22% 96%);
   --surface: #FFFFFF;
-  --ink: #1D1513;
-  --ink-2: #5E5350;
-  --ink-3: #8C817D;
-  --line: #E7E2DC;
-  --chip: #EFEBE6;
-  --accent: #8A1C15;
-  --accent-ink: #FFFFFF;
-  --tag-bg: #FBEFD6;
-  --tag-ink: #7A4A00;
-  --hot: #B3261E;
-  --material: rgba(247, 245, 241, 0.72);
-  --scrim: rgba(20, 10, 8, 0.42);
-  --shadow: 0 -8px 40px rgba(40, 15, 10, 0.18);
-  --f-display: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
-  --f-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ink: hsl(var(--h) 18% 10%);
+  --ink-2: hsl(var(--h) 8% 34%);
+  --ink-3: hsl(var(--h) 6% 46%);
+  --line: hsl(var(--h) 14% 89%);
+  --fill: hsl(var(--h) 18% 93%);
+  --soft: hsl(var(--h) 70% 94%);
+  --soft-ink: hsl(var(--h) 60% 26%);
+  --hot: #B42318;
+  --frost: #2563A8;
+  --material: hsla(var(--h), 22%, 96%, 0.78);
+  --scrim: rgba(12, 8, 4, 0.44);
+  --shadow: 0 -10px 40px rgba(20, 12, 4, 0.16);
+  --lift: 0 1px 2px rgba(20, 12, 4, 0.05), 0 6px 20px rgba(20, 12, 4, 0.05);
+  --f-ui: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-title: var(--f-ui);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ground: #141010; --surface: #1D1817; --ink: #F3ECE8; --ink-2: #BDB1AC; --ink-3: #8A7F7B;
-    --line: #2E2725; --chip: #2A2321; --accent: #F2A81D; --accent-ink: #1D1513;
-    --tag-bg: #3A2A12; --tag-ink: #F5C46A; --hot: #FF8A80;
-    --material: rgba(20, 16, 16, 0.7); --scrim: rgba(0, 0, 0, 0.6); --shadow: 0 -8px 40px rgba(0,0,0,0.5);
+    --accent: var(--accent-d); --on-accent: #120C05;
+    --ground: hsl(var(--h) 10% 7%); --surface: hsl(var(--h) 8% 11%);
+    --ink: hsl(var(--h) 20% 94%); --ink-2: hsl(var(--h) 8% 72%); --ink-3: hsl(var(--h) 6% 58%);
+    --line: hsl(var(--h) 8% 19%); --fill: hsl(var(--h) 8% 16%);
+    --soft: hsl(var(--h) 40% 16%); --soft-ink: hsl(var(--h) 80% 76%);
+    --hot: #FF8A7A; --frost: #8CC4FF;
+    --material: hsla(var(--h), 10%, 7%, 0.74); --scrim: rgba(0, 0, 0, 0.62);
+    --shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); --lift: none;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --ground: #141010; --surface: #1D1817; --ink: #F3ECE8; --ink-2: #BDB1AC; --ink-3: #8A7F7B;
-  --line: #2E2725; --chip: #2A2321; --accent: #F2A81D; --accent-ink: #1D1513;
-  --tag-bg: #3A2A12; --tag-ink: #F5C46A; --hot: #FF8A80;
-  --material: rgba(20, 16, 16, 0.7); --scrim: rgba(0, 0, 0, 0.6); --shadow: 0 -8px 40px rgba(0,0,0,0.5);
+  --accent: var(--accent-d); --on-accent: #120C05;
+  --ground: hsl(var(--h) 10% 7%); --surface: hsl(var(--h) 8% 11%);
+  --ink: hsl(var(--h) 20% 94%); --ink-2: hsl(var(--h) 8% 72%); --ink-3: hsl(var(--h) 6% 58%);
+  --line: hsl(var(--h) 8% 19%); --fill: hsl(var(--h) 8% 16%);
+  --soft: hsl(var(--h) 40% 16%); --soft-ink: hsl(var(--h) 80% 76%);
+  --hot: #FF8A7A; --frost: #8CC4FF;
+  --material: hsla(var(--h), 10%, 7%, 0.74); --scrim: rgba(0, 0, 0, 0.62);
+  --shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); --lift: none;
   color-scheme: dark;
 }
+:root[data-type="classic"] { --f-title: "Newsreader", Georgia, "Times New Roman", serif; }
 
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
   background: var(--ground); color: var(--ink);
-  font: 400 1rem/1.5 var(--f-body);
-  -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: transparent;
+  font: 400 1rem/1.5 var(--f-ui);
+  -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent;
 }
-button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
-:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; border-radius: 8px; }
-.wrap { max-width: 600px; margin: 0 auto; }
-.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+::selection { background: var(--brand); color: var(--on-brand); }
+button, input { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 10px; }
+svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.wrap { max-width: 620px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.press { transition: transform 120ms cubic-bezier(.2,.8,.2,1), background 140ms; }
+.press:active { transform: scale(0.97); transition-duration: 40ms; }
 
-/* Header */
-.hero { background: var(--lacquer); color: #FBE9C8; }
-.hero .wrap { padding-block: 28px 24px; display: flex; gap: 16px; align-items: center; }
-.hero svg { flex: none; width: 64px; height: 64px; }
-.wordmark { font: 600 1.9rem/0.95 var(--f-display); letter-spacing: 0.01em; text-transform: uppercase; color: var(--saffron); margin: 0; text-wrap: balance; }
-.hero-meta { margin: 8px 0 0; font-size: 0.82rem; color: #E9C9A8; display: flex; flex-wrap: wrap; gap: 4px 12px; }
-.hero-meta b { color: #FFF3DC; font-weight: 600; }
+/* Header band: the client's colour and logo */
+.band { background: var(--brand); color: var(--on-brand); }
+.band .wrap { padding-block: 14px 26px; }
+.band-top { display: flex; justify-content: flex-end; gap: 8px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; text-decoration: none; }
+.pill.ghost { background: color-mix(in srgb, var(--on-brand) 10%, transparent); }
+.pill.solid { background: var(--on-brand); color: var(--brand); }
+.pill svg.i { width: 17px; height: 17px; }
+.id { display: flex; align-items: center; gap: 18px; margin-top: 10px; }
+.logo { width: 92px; height: auto; flex: none; }
+.logo.invert { filter: brightness(0) invert(1); }
+.id h1 { margin: 0; font: 600 2rem/1.05 var(--f-title); letter-spacing: -0.02em; text-wrap: balance; }
+.id p { margin: 6px 0 0; font-size: 0.85rem; opacity: 0.78; line-height: 1.4; }
 
-/* Sticky rail: translucent material, content scrolls beneath */
-.rail {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
-  background: var(--material);
-  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
-}
-.rail::after { /* scroll-edge effect instead of a hard divider */
-  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 14px; pointer-events: none;
-  background: linear-gradient(var(--material), transparent); opacity: var(--edge, 0); transition: opacity 200ms;
-}
-.rail .wrap { display: flex; align-items: center; gap: 8px; padding-block: 10px; }
-.chips { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; scroll-behavior: smooth; mask-image: linear-gradient(90deg, #000 88%, transparent); }
-.chips::-webkit-scrollbar { display: none; }
-.chip {
-  flex: none; padding: 8px 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 500;
-  background: var(--chip); color: var(--ink-2); white-space: nowrap;
-  transition: background 160ms, color 160ms, transform 100ms ease-out;
-}
-.chip[aria-current="true"] { background: var(--accent); color: var(--accent-ink); }
-.chip:active, .icon-btn:active { transform: scale(0.95); transition-duration: 60ms; }
-.icon-btn {
-  position: relative; flex: none; width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center;
-  background: var(--chip); color: var(--ink); transition: transform 100ms ease-out;
-}
-.icon-btn svg { width: 19px; height: 19px; }
-.badge { position: absolute; top: -2px; right: -2px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--saffron); color: #1D1513; font-size: 0.68rem; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
-.search { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px; border-radius: 999px; background: var(--chip); }
-.search input { flex: 1; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 0.95rem; color: var(--ink); outline: none; }
+/* Index: every category visible at once */
+.index { margin-top: -12px; background: var(--surface); border-radius: 20px; box-shadow: var(--lift); padding: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; position: relative; }
+.ix { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 10px 12px; border-radius: 14px; text-align: left; }
+.ix:hover { background: var(--fill); }
+.ix b { font-weight: 600; font-size: 0.95rem; line-height: 1.25; }
+.ix span { font-size: 0.76rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.ix[aria-current="true"] { background: var(--soft); }
+.ix[aria-current="true"] b { color: var(--soft-ink); }
+
+/* Sticky bar: where you are + one tap to everything */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; margin-top: 12px;
+  background: var(--material); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%); }
+.bar::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; pointer-events: none;
+  background: linear-gradient(var(--material), transparent); opacity: var(--edge, 0); transition: opacity 200ms; }
+.bar { display: flex; gap: 8px; align-items: center; padding-block: 10px;
+  margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.where { flex: 1; min-width: 0; height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 14px 0 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); text-align: left; }
+.where span { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.where small { font-size: 0.76rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.where svg.i { width: 18px; height: 18px; color: var(--ink-3); }
+.ibtn { position: relative; width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); }
+.count { position: absolute; top: -4px; right: -4px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 10px; background: var(--accent); color: var(--on-accent); font-size: 0.7rem; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.search { flex: 1; min-width: 0; height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); }
+.search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 1rem; caret-color: var(--accent); }
 .search input::placeholder { color: var(--ink-3); }
-.search svg { width: 17px; height: 17px; color: var(--ink-3); flex: none; }
+.search svg.i { color: var(--ink-3); width: 18px; height: 18px; }
 
-/* Active filters summary */
-.active-filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-block: 12px 0; font-size: 0.82rem; color: var(--ink-2); }
-.pill-x { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); font-size: 0.8rem; }
+.chips-on { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 4px; font-size: 0.82rem; color: var(--ink-2); }
+.chip-x { display: inline-flex; align-items: center; gap: 4px; height: 30px; padding: 0 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 0.8rem; font-weight: 500; }
+.chip-x svg.i { width: 13px; height: 13px; }
 
 /* Sections */
-main .wrap { padding-block: 8px 24px; }
-section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 64px); padding-top: 28px; }
-.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-h2 { font: 600 1.45rem/1.1 var(--f-display); text-transform: uppercase; letter-spacing: 0.01em; margin: 0; text-wrap: balance; }
-.sec-head span { font-size: 0.78rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.intro { margin: 8px 0 4px; color: var(--ink-2); font-size: 0.9rem; line-height: 1.55; max-width: 62ch; }
-.intro b { color: var(--ink); font-weight: 600; }
+main { padding-block: 4px 32px; }
+.shell { display: block; }
+.content { min-width: 0; }
+section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); padding-top: 32px; }
+h2 { margin: 0 4px; font: 600 1.55rem/1.15 var(--f-title); letter-spacing: -0.015em; text-wrap: balance; }
+.note { margin: 10px 4px 0; max-width: 64ch; color: var(--ink-2); font-size: 0.92rem; line-height: 1.55; white-space: pre-line; }
+.note b { color: var(--ink); font-weight: 600; }
+.note small { display: block; margin-top: 4px; font-size: 0.78rem; color: var(--ink-3); }
+.list { list-style: none; margin: 14px 0 0; padding: 0; background: var(--surface); border-radius: 20px; box-shadow: var(--lift); overflow: hidden; }
+.list li + li .item { border-top: 1px solid var(--line); }
+.item { display: block; width: 100%; padding: 16px 18px; text-align: left; transition: background 140ms; }
+.item:active { background: var(--fill); transition-duration: 0ms; }
+.r1 { display: flex; align-items: baseline; gap: 14px; }
+.nm { flex: 1; min-width: 0; font: 600 1.04rem/1.32 var(--f-title); letter-spacing: -0.005em; overflow-wrap: anywhere; }
+:root[data-type="classic"] .nm { font-size: 1.12rem; }
+.fz { display: inline-block; width: 15px; height: 15px; margin-left: 5px; vertical-align: -2px; color: var(--frost); }
+.pr { flex: none; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+.tg { display: inline-flex; align-items: center; gap: 3px; height: 22px; padding: 0 8px; border-radius: 7px; background: var(--fill); color: var(--ink-2); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em; }
+.tg.spec { background: var(--soft); color: var(--soft-ink); }
+.tg.new { background: var(--accent); color: var(--on-accent); }
+.tg.hot { background: transparent; color: var(--hot); padding-left: 0; }
+.tg svg.i { width: 13px; height: 13px; stroke-width: 2.2; }
+.ds { margin: 6px 0 0; color: var(--ink-2); font-size: 0.9rem; line-height: 1.5; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.al { margin: 8px 0 0; font-size: 0.77rem; color: var(--ink-3); }
+.al b { font-weight: 600; color: var(--ink-2); margin-right: 4px; }
+.empty { padding: 56px 12px; text-align: center; color: var(--ink-2); }
+.empty button { margin-top: 14px; height: 44px; padding: 0 20px; border-radius: 12px; background: var(--accent); color: var(--on-accent); font-weight: 600; }
 
-.list { list-style: none; margin: 12px 0 0; padding: 0; background: var(--surface); border-radius: 18px; overflow: hidden; }
-.dish { display: block; width: 100%; text-align: left; padding: 16px 16px 15px; transition: background 120ms, transform 100ms ease-out; }
-.list li + li .dish { border-top: 1px solid var(--line); }
-.dish:active { background: var(--chip); transition-duration: 0ms; }
-.row1 { display: flex; align-items: baseline; gap: 12px; }
-.name { flex: 1; min-width: 0; font-weight: 600; font-size: 1.02rem; line-height: 1.3; letter-spacing: -0.005em; }
-.price { flex: none; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 0.98rem; }
-.tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.tag { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.02em; padding: 2px 8px; border-radius: 6px; background: var(--tag-bg); color: var(--tag-ink); }
-.tag.hot { background: transparent; color: var(--hot); padding-left: 0; }
-.tag.new { background: var(--accent); color: var(--accent-ink); }
-.desc { margin: 6px 0 0; color: var(--ink-2); font-size: 0.88rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.allerg { margin: 8px 0 0; font-size: 0.76rem; color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 2px 6px; }
-.allerg b { font-weight: 600; color: var(--ink-2); }
-.empty { padding: 48px 8px; text-align: center; color: var(--ink-2); }
-.empty button { margin-top: 12px; padding: 10px 18px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+footer .wrap { padding-block: 8px 28px; display: grid; gap: 8px; font-size: 0.82rem; color: var(--ink-3); }
+.legend { display: flex; align-items: center; gap: 6px; }
+.legend .fz { margin: 0; }
+footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
 
-footer .wrap { padding-block: 24px 48px; color: var(--ink-3); font-size: 0.8rem; display: grid; gap: 6px; }
-footer b { color: var(--ink-2); font-weight: 600; }
+/* Plateform-only demo panel */
+.demo { border-top: 1px dashed var(--line); }
+.demo .wrap { padding-block: 22px 40px; display: grid; gap: 14px; }
+.demo h3 { margin: 0; font-size: 0.95rem; font-weight: 600; }
+.demo p { margin: 0; font-size: 0.82rem; color: var(--ink-3); max-width: 60ch; }
+.sw { display: flex; flex-wrap: wrap; gap: 10px; }
+.sw button { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--surface); box-shadow: 0 0 0 1px var(--line); }
+.sw button[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--ink); }
+.seg { display: inline-flex; padding: 3px; border-radius: 12px; background: var(--fill); gap: 2px; }
+.seg button { height: 34px; padding: 0 14px; border-radius: 9px; font-size: 0.86rem; font-weight: 600; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--lift); }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
 
 /* Bottom sheet */
-.scrim { position: fixed; inset: 0; background: var(--scrim); opacity: 0; pointer-events: none; z-index: 40; }
-.sheet {
-  position: fixed; left: 0; right: 0; bottom: 0; z-index: 41; margin: 0 auto; max-width: 600px;
-  max-height: 88dvh; display: flex; flex-direction: column;
-  background: var(--surface); border-radius: 22px 22px 0 0; box-shadow: var(--shadow);
-  transform: translateY(110%); visibility: hidden; will-change: transform;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.sheet::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 80px; background: var(--surface); } /* covers overshoot */
-.grab { touch-action: none; cursor: grab; padding: 10px max(20px, env(safe-area-inset-right, 0px)) 4px max(20px, env(safe-area-inset-left, 0px)); user-select: none; }
-.grab::before { content: ""; display: block; width: 38px; height: 5px; border-radius: 3px; background: var(--line); margin: 0 auto 14px; }
-.sheet-body { overflow-y: auto; overscroll-behavior: contain; padding: 0 max(20px, env(safe-area-inset-right, 0px)) 28px max(20px, env(safe-area-inset-left, 0px)); }
-.sh-title { display: flex; align-items: baseline; gap: 12px; }
-.sh-title h3 { flex: 1; margin: 0; font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.015em; font-weight: 700; text-wrap: balance; }
-.sh-title .price { font-size: 1.15rem; }
-.sh-sub { margin: 4px 0 0; font-size: 0.82rem; color: var(--ink-3); }
-.sh-desc { margin: 14px 0 0; color: var(--ink-2); line-height: 1.6; font-size: 0.95rem; }
-.sh-block { margin-top: 20px; }
-.sh-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 8px; }
-.a-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.a-chip { padding: 6px 12px; border-radius: 999px; background: var(--chip); font-size: 0.85rem; font-weight: 500; }
-.a-none { font-size: 0.9rem; color: var(--ink-2); }
-.opts { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 14px; }
-.opts li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; font-size: 0.92rem; }
-.opts li + li { border-top: 1px solid var(--line); }
-.opts span:last-child { font-weight: 600; font-variant-numeric: tabular-nums; }
-.pair { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 14px; background: var(--tag-bg); color: var(--tag-ink); font-size: 0.9rem; width: 100%; text-align: left; }
-.pair b { display: block; color: var(--ink); font-weight: 600; }
-.note { margin-top: 20px; font-size: 0.8rem; color: var(--ink-3); line-height: 1.5; }
-
-/* Filter sheet */
+.scrim { position: fixed; inset: 0; z-index: 40; background: var(--scrim); opacity: 0; pointer-events: none; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 41; max-width: 620px; margin: 0 auto; max-height: 88dvh;
+  display: flex; flex-direction: column; background: var(--surface); border-radius: 24px 24px 0 0; box-shadow: var(--shadow);
+  transform: translateY(110%); visibility: hidden; will-change: transform; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.sheet::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 90px; background: var(--surface); }
+.grab { touch-action: none; cursor: grab; user-select: none; display: flex; align-items: center; gap: 12px; padding: 22px max(22px, env(safe-area-inset-right, 0px)) 6px max(22px, env(safe-area-inset-left, 0px)); position: relative; }
+.grab::before { content: ""; position: absolute; top: 8px; left: 50%; width: 38px; height: 5px; margin-left: -19px; border-radius: 3px; background: var(--line); }
+.grab h3 { flex: 1; min-width: 0; margin: 0; font: 600 1.4rem/1.2 var(--f-title); letter-spacing: -0.015em; text-wrap: balance; }
+.close { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--fill); flex: none; }
+.close svg.i { width: 16px; height: 16px; }
+.sbody { overflow-y: auto; overscroll-behavior: contain; padding: 4px max(22px, env(safe-area-inset-right, 0px)) 28px max(22px, env(safe-area-inset-left, 0px)); }
+.s-price { font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.s-desc { margin: 14px 0 0; color: var(--ink-2); line-height: 1.6; white-space: pre-line; }
+.s-blk { margin-top: 22px; }
+.s-lbl { margin: 0 0 8px; font-size: 0.78rem; font-weight: 600; color: var(--ink-3); }
+.a-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.a-c { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 999px; background: var(--fill); font-size: 0.86rem; font-weight: 500; }
+.frozen-row { display: flex; gap: 10px; align-items: center; margin-top: 18px; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--frost) 10%, transparent); color: var(--ink); font-size: 0.9rem; }
+.frozen-row .fz { margin: 0; width: 18px; height: 18px; }
+.s-note { margin-top: 22px; font-size: 0.8rem; color: var(--ink-3); }
+.ix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 .f-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.toggle { padding: 9px 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.9rem; font-weight: 500; transition: background 140ms, color 140ms, border-color 140ms, transform 100ms ease-out; }
-.toggle:active { transform: scale(0.96); }
-.toggle[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
-.toggle.ex[aria-pressed="true"] { background: var(--hot); border-color: var(--hot); color: #fff; text-decoration: line-through; }
-.f-actions { display: flex; gap: 10px; margin-top: 24px; }
-.f-actions button { flex: 1; height: 50px; border-radius: 14px; font-weight: 600; }
-.btn-ghost { background: var(--chip); }
-.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.tog { height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.tog[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.tog.ex[aria-pressed="true"] { background: var(--hot); border-color: var(--hot); color: #fff; }
+.tog svg.i { width: 15px; height: 15px; }
+.f-act { display: flex; gap: 10px; margin-top: 26px; }
+.f-act button { flex: 1; height: 52px; border-radius: 14px; font-weight: 600; }
+.b-ghost { background: var(--fill); }
+.b-main { background: var(--accent); color: var(--on-accent); }
+.lang { display: grid; gap: 4px; }
+.lang button { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; border-radius: 14px; font-weight: 500; }
+.lang button[aria-pressed="true"] { background: var(--fill); font-weight: 600; }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 60; transform: translate(-50%, 20px); opacity: 0; max-width: calc(100% - 32px);
+  padding: 12px 16px; border-radius: 14px; background: var(--ink); color: var(--surface); font-size: 0.88rem; transition: opacity 200ms, transform 300ms cubic-bezier(.2,.8,.2,1); pointer-events: none; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
 
-@media (prefers-reduced-motion: reduce) {
-  .chips { scroll-behavior: auto; }
-  * { transition-duration: 0ms !important; }
-}
-@media (prefers-reduced-transparency: reduce) {
-  .rail { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; }
-}
-@media (min-width: 640px) {
-  .wordmark { font-size: 2.3rem; }
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0ms !important; } }
+@media (prefers-reduced-transparency: reduce) { .bar { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@media (prefers-contrast: more) { .list, .index, .where, .ibtn, .search { box-shadow: none; border: 1px solid var(--ink-3); } }
+@media (min-width: 560px) { .index, .ix-grid { grid-template-columns: 1fr 1fr 1fr; } .logo { width: 108px; } }
+
+/* Desktop: index becomes a sticky sidebar, search always open, details in a floating panel */
+@media (min-width: 960px) {
+  .wrap { max-width: 1120px; }
+  .band .wrap { padding-block: 18px 40px; }
+  .id h1 { font-size: 2.6rem; }
+  .shell { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 48px; align-items: start; }
+  .index { position: sticky; top: 24px; margin-top: -20px; grid-template-columns: 1fr; gap: 0; padding: 10px; max-height: calc(100vh - 48px); overflow-y: auto; }
+  .ix { flex-direction: row; justify-content: space-between; align-items: center; min-height: 44px; padding: 8px 12px; }
+  .ix b { font-size: 0.93rem; }
+  .content { max-width: 680px; }
+  .bar { margin: 0; padding: 16px 0 10px; top: 0; }
+  .bar::after { display: none; }
+  #whereBtn, #searchBtn { display: none; }
+  #searchBox { display: flex !important; }
+  section { scroll-margin-top: 88px; }
+  .list .item:hover { background: var(--fill); }
+  .sheet { bottom: 24px; border-radius: 24px; max-height: calc(100vh - 96px); }
+  .sheet::after { display: none; }
 }
 </style>
 
-<header class="hero">
-  <div class="wrap gutter">
-    <svg viewBox="0 0 64 64" aria-hidden="true">
-      <circle cx="32" cy="34" r="26" fill="none" stroke="#F2A81D" stroke-width="3"/>
-      <path d="M10 27 L33 8 L57 25 Z" fill="#F2A81D"/>
-      <path d="M17 36 h30 a15 13 0 0 1 -30 0 Z" fill="#F2A81D"/>
-      <path d="M38 33 L58 21 M41 35 L60 24" stroke="#F2A81D" stroke-width="2.4" stroke-linecap="round"/>
-    </svg>
-    <div>
-      <h1 class="wordmark">Good Morning,<br>Vietnam</h1>
-      <p class="hero-meta"><span><b>Menù pranzo</b></span><span>Piazza dei Tribunali 6a, Bologna</span></p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M9 4l3 2 3-2M9 20l3-2 3 2M4.2 10.6l2.6-1.2-.3-2.9M19.8 13.4l-2.6 1.2.3 2.9M4.2 13.4l2.6 1.2-.3 2.9M19.8 10.6l-2.6-1.2.3-2.9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/></symbol>
+  <symbol id="i-chili" viewBox="0 0 24 24"><path d="M14 6c-1-2-3-2-3-2M13 7c4-1 7 2 6 6-1 5-8 8-14 7 5-2 6-5 6-9 0-2 1-3.5 2-4Z"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+</svg>
+
+<header class="band">
+  <div class="wrap">
+    <div class="band-top">
+      <button class="pill ghost press" id="langBtn" aria-label="Lingua del menù"><svg class="i"><use href="#i-globe"/></svg>IT</button>
+      <a class="pill solid press" id="bookLink" href="https://goodmorningvietnam.plateform.app/" target="_blank" rel="noopener"><svg class="i"><use href="#i-cal"/></svg>Prenota</a>
+    </div>
+    <div class="id">
+      <img class="logo" id="logo" alt="" src="data:image/png;base64,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">
+      <div>
+        <h1 id="menuTitle"></h1>
+        <p id="placeLine"></p>
+      </div>
     </div>
   </div>
 </header>
 
-<nav class="rail" id="rail" aria-label="Categorie">
-  <div class="wrap gutter">
-    <div class="chips" id="chips"></div>
-    <label class="search" id="searchBox" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="q" type="search" placeholder="Cerca un piatto o un ingrediente" autocomplete="off" aria-label="Cerca nel menù">
-    </label>
-    <button class="icon-btn" id="searchBtn" aria-label="Cerca">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    </button>
-    <button class="icon-btn" id="filterBtn" aria-label="Filtra per allergeni e preferenze">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
-      <span class="badge" id="fCount" hidden>0</span>
-    </button>
+<div class="wrap shell">
+  <nav class="index" id="index" aria-label="Categorie del menù"></nav>
+  <div class="content">
+    <div class="bar" id="bar">
+      <button class="where press" id="whereBtn" aria-haspopup="dialog"><span id="whereLbl">Tutte le categorie</span><small id="whereNum"></small><svg class="i"><use href="#i-down"/></svg></button>
+      <label class="search" id="searchBox" hidden><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Cerca nel menù" autocomplete="off" aria-label="Cerca nel menù"></label>
+      <button class="ibtn press" id="searchBtn" aria-label="Cerca"><svg class="i" id="searchIcon"><use href="#i-search"/></svg></button>
+      <button class="ibtn press" id="filterBtn" aria-label="Filtri e allergeni"><svg class="i"><use href="#i-filter"/></svg><span class="count" id="fCount" hidden></span></button>
+    </div>
+    <main><div class="chips-on" id="chipsOn" hidden></div><div id="menu"></div></main>
   </div>
-</nav>
-
-<main>
-  <div class="wrap gutter">
-    <div class="active-filters" id="activeFilters" hidden></div>
-    <div id="menu"></div>
-  </div>
-</main>
+</div>
 
 <footer>
-  <div class="wrap gutter">
-    <span><b>Good Morning, Vietnam</b> · Piazza dei Tribunali 6a, 40124 Bologna</span>
-    <span>Per allergie o intolleranze chiedi sempre al nostro personale. Il coriandolo è disponibile su richiesta.</span>
-    <span>Anteprima di redesign · dati dal menù pubblicato su Plateform</span>
+  <div class="wrap">
+    <span class="legend"><svg class="i fz"><use href="#i-snow"/></svg>Prodotto surgelato</span>
+    <span>Per allergie o intolleranze chiedi sempre al personale.</span>
+    <span id="addr"></span>
+    <span>Powered by <a href="https://plateform.app" target="_blank" rel="noopener">Plateform</a></span>
   </div>
 </footer>
 
+<aside class="demo" aria-label="Pannello anteprima">
+  <div class="wrap">
+    <h3>Prova il contenitore con un altro locale</h3>
+    <p>Pannello solo per questa anteprima, non fa parte del menù. Il colore del locale guida la testata e gli accenti; testi e neutri si adattano da soli per restare leggibili.</p>
+    <div class="sw" id="swatches"></div>
+    <div class="demo-row">
+      <div class="seg" id="typeSeg"><button data-type="modern" aria-pressed="true">Moderno</button><button data-type="classic" aria-pressed="false">Classico</button></div>
+      <div class="seg" id="themeSeg"><button data-th="" aria-pressed="true">Auto</button><button data-th="light" aria-pressed="false">Chiaro</button><button data-th="dark" aria-pressed="false">Scuro</button></div>
+    </div>
+  </div>
+</aside>
+
 <div class="scrim" id="scrim"></div>
-<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
-  <div class="grab" id="grab"></div>
-  <div class="sheet-body" id="sheetBody"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <div class="grab" id="grab"><h3 id="sTitle"></h3><button class="close press" id="sClose" aria-label="Chiudi"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="sbody" id="sbody"></div>
 </div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
-const A = { G: "Glutine", U: "Uova", P: "Pesce", Ar: "Arachidi", So: "Soia", Se: "Sedano", Ses: "Sesamo", Cr: "Crostacei", Sf: "Solfiti" };
-const PAIR_PHO = { cat: "calice", name: "Schloss Lieser · Riesling Spätlese ’21", price: 8, note: "Il nostro abbinamento per il Phở" };
-const C = [
- { id: "involtini", name: "Involtini e insalate", note: "<b>Da condividere.</b> Nella tradizione vietnamita i pasti sono momenti di condivisione: involtini croccanti e insalate fresche si servono al centro della tavola.", items: [
-  { n: "Chả giò chay", o: "Cha gio chay · finger food", p: 8, t: ["Vegetariano"], d: "Due involtini fritti di sfoglia croccante ripieni di verdure e piselli, serviti con salsa leggermente piccante.", a: ["G","U","Se"], opts: [["Un solo involtino “Single Pride”", 4.5], ["Ciotolina di salsa extra", 1]] },
-  { n: "Chả giò thịt", o: "Cha gio thit · finger food", p: 8, t: ["Specialità"], d: "Due involtini fritti di sfoglia di riso croccante ripieni di carne di maiale, funghi asiatici ed erbe aromatiche. Serviti con salsa di pesce “nước mắm”.", a: ["G","U","P","Se"], opts: [["Un solo involtino “Single Pride”", 4.5], ["Ciotolina di salsa extra", 1]] },
-  { n: "Gỏi xoài gà", o: "Goi xoai ga", p: 9.5, t: [], d: "Insalata di mango, lattuga iceberg, carote, fiocchi di cipolla fritta, straccetti di pollo, arachidi ed erbe aromatiche in salsa di pesce agrodolce. Servita con cialde croccanti di gamberetti.", a: ["G","P","Ar"] },
-  { n: "Cialde di gamberetti", o: "Bánh phồng tôm", p: 1.5, t: [], d: "Cialde croccanti di gamberetti.", a: ["Cr"] }
- ]},
- { id: "pho", name: "Phở", note: "<b>Il brodo.</b> Chiaro e profumato, cotto per ore con ossa di manzo, spezie e aromi naturali. Il piatto più iconico del Vietnam: leggero, ma ricco di gusto.", items: [
-  { n: "Phở bò", o: "Pho bo", p: 13.5, t: ["Specialità","Senza glutine"], d: "Brodo di carne tradizionale con tagliatelle di riso, carpaccio di manzo, spezie vietnamite e cipolla.", a: ["So"], pair: PAIR_PHO, cil: 1 },
-  { n: "Phở bò gân", o: "Pho bo gan", p: 15, t: ["Specialità","Senza glutine"], d: "Brodo di carne tradizionale con tagliatelle di riso, carpaccio e nervetti di manzo cotti nel brodo per 6 ore, spezie vietnamite e cipolla.", a: ["So"], pair: PAIR_PHO, cil: 1 },
-  { n: "Phở đậu phụ", o: "Pho dau phu", p: 12.5, t: [], d: "Brodo di carne tradizionale con tagliatelle di riso, tofu fritto, spezie vietnamite e cipolla.", a: ["G","So"], pair: PAIR_PHO, cil: 1 },
-  { n: "Phở gà", o: "Pho ga", p: 13, t: ["Specialità","Senza glutine"], d: "Brodo di carne tradizionale con tagliatelle di riso, pollo stufato, spezie vietnamite e cipolla.", a: ["So"], pair: PAIR_PHO, cil: 1 }
- ]},
- { id: "com", name: "Riso", note: "<b>Cơm.</b> Il riso bianco al vapore è la base di ogni pasto vietnamita. Per sapori decisi cerca l’etichetta Specialità, per sapori delicati il latte di cocco.", items: [
-  { n: "Cơm bò cà ri", o: "Com bo cari", p: 13.5, t: ["Latte di cocco"], d: "Ciotola di riso bianco con fettine di manzo al curry, latte di cocco, verdure e fiocchi di cipolla fritta.", a: ["G","P","So","Se"] },
-  { n: "Cơm bò ngũ vị", o: "Com bo ngu vi", p: 13.5, t: [], d: "Ciotola di riso bianco con fettine di manzo al mix di cinque spezie vietnamite, verdure e fiocchi di cipolla fritta.", a: ["G","P","So","Se","Ses"] },
-  { n: "Cơm gà cà ri", o: "Com ga cari", p: 13, t: ["Latte di cocco"], d: "Ciotola di riso bianco con straccetti di coscia di pollo stufato, curry, latte di cocco, verdure e fiocchi di cipolla fritta.", a: ["G","P","So","Se"] },
-  { n: "Cơm gà sa tế", o: "Com ga sate", p: 13, t: ["Specialità","Piccante"], d: "Ciotola di riso bianco con straccetti di coscia di pollo stufato in salsa satè (aglio, scalogno, peperoncino, lemongrass, zenzero), verdure e fiocchi di cipolla fritta.", a: ["G","P","So"] },
-  { n: "Cơm sườn xá xíu", o: "Com suon xa xiu", p: 15, t: ["Novità","Specialità"], d: "Ciotola di riso bianco con costine di maiale al forno marinate in salsa xá xíu, verdure fresche e fiocchi di cipolla fritta.", a: ["G","So","Ses"] },
-  { n: "Cơm rau cà ri", o: "Com rau cari", p: 12.5, t: ["Latte di cocco"], d: "Ciotola di riso bianco con verdure saltate al wok al curry, tofu fritto, latte di cocco e fiocchi di cipolla fritta.", a: ["G","P","So","Se"] },
-  { n: "Cơm thịt rang", o: "Com thit rang", p: 13.5, t: ["Specialità"], d: "Ciotola di riso bianco con coppa di suino marinata al lemongrass, sesamo, erbe aromatiche e verdure fresche. Servita con salsa di pesce “nước mắm”.", a: ["G","P","So","Ses"] },
-  { n: "Cơm rau sa tế", o: "Com rau sate", p: 12.5, t: ["Specialità","Piccante"], d: "Ciotola di riso bianco con tofu fritto in salsa satè (aglio, scalogno, peperoncino, lemongrass, zenzero), verdure e fiocchi di cipolla fritta.", a: ["G","P","So"] },
-  { n: "Cơm thịt heo xào sa tế", o: "Com thit heo xao sate", p: 13, t: ["Specialità","Piccante"], d: "Ciotola di riso bianco con fettine di coppa di suino marinate al lemongrass in salsa satè, verdure e fiocchi di cipolla fritta.", a: ["G","So"] },
-  { n: "Cơm trắng", o: "Com trang", p: 3, t: [], d: "Ciotola di riso bianco.", a: [] }
- ]},
- { id: "bun", name: "Noodles di riso", note: "<b>Bún.</b> Vermicelli di riso lunghi e sottili, saltati al wok con verdure croccanti, erbe aromatiche e “nước mắm”. Un piatto del Sud, leggero e profumato.", items: [
-  { n: "Bún xào bò", o: "Bun xao bo", p: 13.5, t: [], d: "Vermicelli di riso saltati al wok con straccetti di manzo, verdure fresche, arachidi e fiocchi di cipolla fritta. Serviti con salsa di pesce “nước mắm”.", a: ["G","P","Ar","So","Se","Ses"] },
-  { n: "Bún xào rau", o: "Bun xao rau", p: 12.5, t: [], d: "Vermicelli di riso saltati al wok con tofu fritto, verdure, arachidi e fiocchi di cipolla fritta.", a: ["G","P","Ar","So","Se","Ses"] },
-  { n: "Bún thịt nướng chả giò", o: "Bun thit nuong, cha gio", p: 15, t: ["Specialità"], d: "Vermicelli di riso tiepidi, pancetta di maiale marinata, verdure fresche, arachidi e un involtino chả giò thịt. Serviti con “nước mắm” e cipollotti.", a: ["G","P","Ar","So","Ses"] },
-  { n: "Bún bò xào cà ri", o: "Bun bo xao cari", p: 13.5, t: ["Novità","Specialità","Di stagione"], d: "Vermicelli di riso tiepidi, verdure fresche, straccetti di manzo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.", a: ["G","P","Ar","So"] },
-  { n: "Bún gà xào cà ri", o: "Bun ga xao cari", p: 13, t: ["Novità","Specialità","Di stagione"], d: "Vermicelli di riso tiepidi, verdure fresche, straccetti di pollo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.", a: ["G","P","Ar","So"] }
- ]},
- { id: "dolci", name: "Dolci", items: [
-  { n: "Chè đậu trắng", o: "Che dau trang", p: 5, t: ["Specialità","Per due","Senza lattosio","Senza glutine"], d: "Riso glutinoso servito con crema al cocco e fagioli dall’occhio neri.", a: [] },
-  { n: "Torta di riso glutinoso", o: "Ripieno di fagioli mungo e pandano", p: 3, t: ["Senza lattosio","Senza glutine"], d: "Specialità delle province centrali e sud-occidentali del Vietnam. Fuori è soffice e liscia, grazie all’impasto di farina di riso glutinoso e amido di tapioca; dentro, una crema di fagioli mungo profumata con foglie di pandano, pianta tropicale dalla dolcezza delicata.", a: [] }
- ]},
- { id: "caffe", name: "Acqua e caffè", items: [
-  { n: "Acqua Pejo in vetro", o: "Naturale o frizzante · 0,75 l", p: 2.5, t: [], d: "", a: [] },
-  { n: "Acqua in bottiglia", o: "Naturale o frizzante · 0,5 l", p: 1.5, t: [], d: "", a: [] },
-  { n: "Caffè Poli", o: "100% arabica", p: 2, t: [], d: "", a: [] },
-  { n: "Pure Cold Brew Shot", o: "Caffè freddo", p: 3, t: ["Di stagione"], d: "Caffè specialty monorigine Congo Shasha, estratto a freddo per 8 ore e servito in purezza su ghiaccio. Naturalmente dolce, fruttato, senza zuccheri aggiunti.", a: [] },
-  { n: "Spicy Coffee Mule", o: "Caffè freddo", p: 5.5, t: ["Senza glutine"], d: "Il nostro caffè specialty con ginger beer piccante e frizzante, ghiaccio e una spruzzata di lime fresco. 100% vegetale.", a: [] },
-  { n: "Earl Grey Coffee", o: "Corretto con liquore", p: 6, t: [], d: "Caffè specialty freddo e liquore artigianale all’Earl Grey: note tostate e bergamotto, servito su ghiaccio.", a: [] },
-  { n: "Lapsang Smoke Coffee", o: "Corretto con liquore", p: 6, t: [], d: "Caffè specialty freddo con il liquore al tè Lapsang Souchong di Whistler’s Storm, dalle note affumicate e legnose. Servito con ghiaccio.", a: [] }
- ]},
- { id: "analcolici", name: "Analcolici", items: [
-  { n: "Best Mango", o: "Nettare di mango · 25 cl", p: 3, t: [], d: "", a: [] },
-  { n: "Gemellii Ginger Beer", o: "200 ml", p: 4, t: [], d: "Zenzero piccante e la dolcezza delicata dell’agave.", a: [] },
-  { n: "Gemellii Mojito analcolico", o: "Con ghiaccio, lime e menta", p: 7, t: [], d: "Menta fresca, lime e zucchero di canna: leggero, frizzante e rinfrescante.", a: [] },
-  { n: "Bibo Runge Riesling Zero", o: "Riesling senza alcol · calice", p: 6, t: [], d: "L’alcol è estratto a bassa pressione e poi si aggiunge un tocco di Riesling intenso. Scorza di limone e frutta al naso, oro tenue con riflessi verdi. Residuo zuccherino 2,5 g.", a: ["Sf"] },
-  { n: "Birra Saigon", o: "Lager · 33 cl", p: 6.5, t: [], d: "Lager premium a bassa fermentazione da malto d’orzo, luppolo e riso.", a: ["G"] }
- ]},
- { id: "vini", name: "Vini", note: "<b>Riesling della Mosella.</b> Acidità, mineralità e dolcezza: è il vino che scegliamo per l’equilibrio tra dolce, salato, acido e piccante della cucina vietnamita.", items: [
-  { n: "Max Ferd. Richter · Riesling Trocken ’25", o: "Mosella · residuo 6–8 g/l", p: 6, t: [], d: "", a: ["Sf"], opts: [["Calice", 6], ["Bottiglia", 30]] },
-  { n: "Max Ferd. Richter · Riesling “Zeppelin” ’25", o: "Mosella · residuo 30 g/l", p: 6, t: [], d: "", a: ["Sf"], opts: [["Calice", 6], ["Bottiglia", 28]] },
-  { n: "Schloss Lieser · Riesling Spätlese ’21", o: "Mosella · residuo 73 g/l", p: 8, t: ["Con il Phở"], d: "Il nostro abbinamento consigliato per il Phở.", a: ["Sf"], opts: [["Calice", 8]] },
-  { n: "Bibo Runge · Riesling Zero", o: "Senza alcol", p: 6, t: ["Novità"], d: "Riesling dealcolato a bassa pressione: elegante, fresco, con note di scorza di limone.", a: ["Sf"], opts: [["Calice", 6], ["Bottiglia", 30]] },
-  { n: "Schloss Lieser · Wehlener Sonnenuhr Spätlese ’18", o: "Invecchiato · Mosella · residuo 85 g/l", p: 50, t: ["Agricoltura sostenibile"], d: "", a: ["Sf"], from: "Bottiglia" },
-  { n: "Zilliken · Rausch Spätlese ’11", o: "Invecchiato · Mosella · residuo 70 g/l", p: 115, t: ["Agricoltura sostenibile"], d: "", a: ["Sf"], from: "Bottiglia" }
- ]},
- { id: "distillati", name: "Amari e distillati", items: [
-  { n: "Nếp Mới", o: "Vodka vietnamita di riso · 39,5%", p: 5, t: ["Specialità"], d: "Distillata da riso glutinoso appena raccolto e miscelata con vodka di grano. Un simbolo della cultura vietnamita.", a: [] },
-  { n: "Bud Spencer “The Legend”", o: "Cannella e peperoncino", p: 5, t: [], d: "", a: [] },
-  { n: "Nizurin", o: "Liquore alla nocciola piemontese", p: 5, t: [], d: "2100 bottiglie prodotte.", a: [] },
-  { n: "Grappa “La Cristallina”", o: "Dolcetto giovane", p: 5, t: [], d: "1230 bottiglie prodotte.", a: [] },
-  { n: "Grappa “La Magica”", o: "Nebbiolo invecchiata", p: 6, t: [], d: "870 bottiglie prodotte.", a: [] },
-  { n: "Vermouth Mu", o: "Sartine · ricetta classica", p: 6.5, t: [], d: "1510 bottiglie prodotte. Servito freddo.", a: [] },
-  { n: "Liquore di tè Lapsang Souchong", o: "Whistler’s Storm", p: 7, t: ["Specialità"], d: "Affumicato, con sentori di fumo di pino e un finale ricco e lungo.", a: [] },
-  { n: "Liquore di tè Earl Grey", o: "Whistler’s Storm", p: 7, t: ["Specialità"], d: "Note agrumate di bergamotto su un corpo morbido e vellutato.", a: [] }
- ]}
-];
+const MENU = {"name": "Good Morning, Vietnam", "menu": "Pranzo", "address": "Piazza dei Tribunali, 6a, 40124 Bologna BO, Italia", "brand": "#F5A81C", "categories": [{"name": "Involtini ed insalate 🥙", "notes": [{"n": "Piatti da condividere:", "d": "Nella tradizione vietnamita, i pasti sono momenti di condivisione. Involtini croccanti, insalate fresche e sapori autentici vengono serviti al centro della tavola, da gustare insieme per vivere appieno lo spirito conviviale del Vietnam.", "a": []}], "items": [{"n": "Cha gio chay (finger food)", "p": 8.0, "t": ["Vegetariano"], "d": "Due involtini fritti di sfoglia croccante ripieni di verdure e piselli serviti con salsa leggermente piccante\n\nInvoltino \"Single Pride\": porzione da un involtino 4,5€\n\nCiotolina di salsa extra 1€", "a": ["Glutine", "Uova", "Sedano"], "f": true}, {"n": "Cha gio thit (finger food)", "p": 8.0, "t": ["Specialità"], "d": "Due involtini fritti di sfoglia di riso croccante ripieni di carne di maiale, funghi asiatici ed erbe aromatiche. Serviti con salsa di pesce \"nuoc mam\"\n\nInvoltino \"Single Pride\": porzione da un involtino 4,5€\n\nCiotolina di salsa extra 1€", "a": ["Glutine", "Uova", "Pesce", "Sedano"], "f": true}, {"n": "Goi xoai ga", "p": 9.5, "t": [], "d": "Insalata di mango, lattuga iceberg, carote, fiocchi di cipolla fritta, straccetti di pollo, arachidi, erbe aromatiche, in salsa di pesce agrodolce. Servita con cialde croccanti di gamberetti", "a": ["Glutine", "Pesce", "Arachidi"], "f": true}, {"n": "Cialde croccanti di gamberetti", "p": 1.5, "t": [], "d": "Cialde croccanti di gamberetti", "a": ["Crostacei"], "f": false}]}, {"name": "Pho (Brodo) 🍜", "notes": [{"n": "Il Pho:", "d": "Brodo chiaro e profumato cotto lentamente per ore con ossa di manzo, spezie ed aromi naturali. \nPiatto iconico della cucina vietnamita conosciuto in tutto il mondo, leggero ma ricco di gusto.", "a": []}], "items": [{"n": "Pho bo", "p": 13.5, "t": ["Specialità", "Senza glutine"], "d": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, carpaccio di manzo, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta", "a": ["Soia"], "f": true}, {"n": "Pho bo gan", "p": 15.0, "t": ["Specialità", "Senza glutine"], "d": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, carpaccio e nervetti di manzo cotti nel brodo per 6 ore, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta", "a": ["Soia"], "f": true}, {"n": "Pho dau phu", "p": 12.5, "t": [], "d": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, tofu fritto, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta", "a": ["Glutine", "Soia"], "f": false}, {"n": "Pho ga", "p": 13.0, "t": ["Specialità", "Senza glutine"], "d": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, pollo stufato, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta", "a": ["Soia"], "f": true}]}, {"name": "Piatti con riso 🍛", "notes": [{"n": "Riso:", "d": "Il riso non è solo un alimento, è il cuore della vita vietnamita. In ogni pasto, dalla colazione alla cena, il riso bianco al vapore rappresenta la base di ogni piatto.\nPer sapori diversi segui l'etichetta \"specialità\". \nPer sapori delicati segui il latte di cocco.", "a": []}], "items": [{"n": "Com bo cari", "p": 13.5, "t": [], "d": "Ciotola di riso bianco accompagnato da fettine di manzo al curry, latte di cocco, verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia", "Sedano"], "f": true}, {"n": "Com bo ngu vi", "p": 13.5, "t": [], "d": "Ciotola di riso bianco accompagnato da fettine di manzo con mix di spezie alla vietnamita, verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia", "Sedano", "Sesamo"], "f": true}, {"n": "Com ga cari", "p": 13.0, "t": [], "d": "Ciotola di riso bianco accompagnato da straccetti di coscia di pollo stufato, curry, latte di cocco, verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia", "Sedano"], "f": true}, {"n": "Com ga sate", "p": 13.0, "t": ["Specialità", "Piccante"], "d": "Ciotola di riso bianco accompagnato da straccetti di coscia di pollo stufato in salsa satè (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia"], "f": true}, {"n": "Com suon xa xiu", "p": 15.0, "t": ["Novità", "Specialità"], "d": "Ciotola di riso bianco accompagnato da costine di maiale al forno marinate in salsa \"xa xiu\", con verdure fresche e fiocchi di cipolla fritta", "a": ["Glutine", "Soia", "Sesamo"], "f": true}, {"n": "Com rau cari", "p": 12.5, "t": [], "d": "Ciotola di riso bianco accompagnato da verdure saltate al wok al curry, tofu fritto, latte di cocco e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia", "Sedano"], "f": false}, {"n": "Com thit rang", "p": 13.5, "t": ["Specialità"], "d": "Ciotola di riso bianco accompagnato da coppa di suino marinata al lemon grass, sesamo, erbe aromatiche e verdure fresche. Servita con salsa di pesce \"nuoc mam\"", "a": ["Glutine", "Pesce", "Soia", "Sesamo"], "f": true}, {"n": "Com rau sate", "p": 12.5, "t": ["Piccante", "Specialità"], "d": "Ciotola di riso bianco accompagnato da tofu fritto in salsa sate (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Soia"], "f": false}, {"n": "Com thit heo xao sate", "p": 13.0, "t": ["Piccante", "Specialità"], "d": "Ciotola di riso bianco accompagnato da fettine di coppa di suino marinate al lemon grass in salsa sate (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta", "a": ["Glutine", "Soia"], "f": true}, {"n": "Com trang", "p": 3.0, "t": [], "d": "Ciotola di riso bianco", "a": [], "f": false}]}, {"name": "Noodles di riso", "notes": [{"n": "Bun xao:", "d": "I Bun, a differenza delle tagliatelle, sono lunghi e sottili, vengono saltati al wok con verdure croccanti, erbe aromatiche e salsa di pesce \"nuoc mam\". Piatto tipico e rinfrescante della cucina del Sud del Vietnam, leggero e profumato, perfetto in ogni stagione.", "a": []}], "items": [{"n": "Bun xao bo", "p": 13.5, "t": [], "d": "Vermicelli di riso saltati al wok con straccetti di manzo, verdure fresche, arachidi, fiocchi di cipolla fritta. Serviti con salsa di pesce \"nuoc mam\"", "a": ["Glutine", "Pesce", "Arachidi", "Soia", "Sedano", "Sesamo"], "f": true}, {"n": "Bun xao rau", "p": 12.5, "t": [], "d": "Vermicelli di riso saltati al wok con tofu fritto, verdure, arachidi e fiocchi di cipolla fritta", "a": ["Glutine", "Pesce", "Arachidi", "Soia", "Sedano", "Sesamo"], "f": false}, {"n": "Bun thit nuong, cha gio", "p": 15.0, "t": ["Specialità"], "d": "Vermicelli di riso tiepidi, pancetta di maiale marinata, verdure fresche, arachidi ed involtino cha gio thit. Serviti con salsa di pesce \"nuoc mam\" e cipollotti", "a": ["Glutine", "Pesce", "Arachidi", "Soia", "Sesamo"], "f": true}, {"n": "Bun bo xao cari", "p": 13.5, "t": ["Specialità", "Novità", "Di stagione"], "d": "Vermicelli di riso tiepidi, verdure fresche, straccetti di manzo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.", "a": ["Glutine", "Pesce", "Arachidi", "Soia"], "f": true}, {"n": "Bun ga xao cari", "p": 13.0, "t": ["Specialità", "Novità", "Di stagione"], "d": "Vermicelli di riso tiepidi, verdure fresche, straccetti di pollo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.", "a": ["Glutine", "Pesce", "Arachidi", "Soia"], "f": true}]}, {"name": "Dolci 🧉🍧", "notes": [], "items": [{"n": "Che dau trang", "p": 5.0, "t": ["Specialità", "Per due persone", "Senza lattosio", "Senza glutine"], "d": "Riso glutinoso servito con crema al cocco e fagioli dall'occhiello nero", "a": [], "f": false}, {"n": "Torta di riso glutinoso con ripieno di fagioli mungo e pandano", "p": 3.0, "t": ["Senza lattosio", "Senza glutine"], "d": "La torta di riso glutinoso ripiena di crema di fagioli mungo è una specialità tradizionale particolarmente apprezzata nelle province centrali e sud-occidentali del Vietnam. La parte esterna è soffice e liscia grazie all'impasto morbido in cui amido (di solito di tapioca) e margarina sono uniti alla farina di riso glutinoso. L'interno cremoso è una pasta di legumi che viene aromatizzata in vari modi, per esempio con scaglie di cocco grattugiato o con l'estratto di foglie di Pandano, pianta tropicale che dona una delicata dolcezza.", "a": [], "f": false}]}, {"name": "Acqua 💧", "notes": [], "items": [{"n": "Acqua naturale/frizzante Pejo in vetro 0,75cl", "p": 2.5, "t": [], "d": "", "a": [], "f": false}, {"n": "Acqua mezzo litro nat/gas plastica", "p": 1.5, "t": [], "d": "", "a": [], "f": false}, {"n": "Caffè Poli", "p": 2.0, "t": [], "d": "100% arabica", "a": [], "f": false}]}, {"name": "Cold Brew - caffè freddo", "notes": [], "items": [{"n": "Pure Cold Brew Shot", "p": 3.0, "t": ["Di stagione"], "d": "Caffè Specialty (monorigine Congo Shasha) a estrazione fredda (8 ore), servito in purezza su cubetti di ghiaccio. Naturalmente dolce, fruttato e dissetante, senza zuccheri aggiunti.", "a": [], "f": false}, {"n": "Spicy Coffee Mule", "p": 5.5, "t": [], "d": "L'incontro audace tra il nostro caffè Specialty e la nota piccante e frizzante del ginger beer. Servito con ghiaccio e una spruzzata di lime fresco. Un fine pasto (o break) sorprendentemente energizzante e dissetante.\n(100% Vegetale - Senza Glutine)", "a": [], "f": false}, {"n": "Earl Grey Coffee (corretto con liquore)", "p": 6.0, "t": [], "d": "Un incontro inaspettato tra Oriente e Occidente: Caffè Specialty freddo ed eccezionale liquore artigianale all'Earl Grey. Una sinfonia estiva di note tostate e profumi di bergamotto, servita su ghiaccio.", "a": [], "f": false}, {"n": "Lapsang Smoke Coffee (corretto con liquore)", "p": 6.0, "t": [], "d": "Il nostro Caffè Specialty freddo incontra le note profondamente affumicate e legnose del pluripremiato liquore al tè Lapsang Souchong (Whistler's Storm). Un fine pasto sorprendente ed elegante per gli amanti dei sentori torbati. Servito con ghiaccio", "a": [], "f": false}]}, {"name": "Esperienze analcoliche", "notes": [], "items": [{"n": "Best mango - 25cl", "p": 3.0, "t": [], "d": "Nettare di mango", "a": [], "f": false}, {"n": "Gemellii - Ginger beer", "p": 4.0, "t": [], "d": "Un mix vibrante di zenzero piccante e della delicata dolcezza dell'agave - 200ml", "a": [], "f": false}, {"n": "Bibo Runge - Riesling Zero Alcool", "p": 6.0, "t": [], "d": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Gemellii - Mojito analcolico servito con ghiaccio, lime e foglia di menta", "p": 7.0, "t": [], "d": "Ispirato al Brasile, questo Mojito Mocktail è una miscela leggera e rinvigorente di menta fresca, lime saporito e zucchero di canna, che offre un gusto frizzante, vibrante e rinfrescante dello spirito tropicale di Rio. Una celebrazione frizzante del ritmo e del sole in ogni sorso.", "a": [], "f": false}]}, {"name": "Birra 🍻", "notes": [], "items": [{"n": "Birra Saigon - 33cl", "p": 6.5, "t": [], "d": "Lager Premium a bassa fermentazione ottenuta da malto d'orzo, luppolo e riso.", "a": ["Glutine"], "f": false}]}, {"name": "Vini al calice 🥂", "notes": [], "items": [{"n": "Weingut Max Ferd. Richter - Riesling Trocken '25", "p": 6.0, "t": [], "d": "Germania Mosella - residuo zuccherino 6-8 g/l", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Weingut Max Ferd. Richter - Riesling “Zeppelin” '25", "p": 6.0, "t": [], "d": "Germania Mosella - Residuo zuccherino 30g/l", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Schloss Lieser - Riesling Spatlese '21", "p": 8.0, "t": [], "d": "Germania Mosella - Residuo zuccherino 73g\nPerfetto con il \"Pho\"", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Bibo Runge - Riesling Zero Alcool", "p": 6.0, "t": [], "d": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g", "a": ["Anidride solforosa e solfiti"], "f": false}]}, {"name": "Vini in bottiglia 🍾", "notes": [{"n": "Il Riesling della Mosella e la Cucina Vietnamita:", "d": "la cucina vietnamita si distingue per la sua leggerezza, l'uso di erbe fresche, spezie delicate e una costante ricerca di equilibrio tra dolce, salato, acido e piccante. Il Riesling della Mosella è l'unico vino che si abbina perfettamente con i nostri piatti, grazie alla sua acidità, mineralità e dolcezza.", "a": ["Anidride solforosa e solfiti"]}], "items": [{"n": "Weingut Max Ferd. Richter - Riesling “Zeppelin”  '25", "p": 28.0, "t": [], "d": "Germania Mosella - Residuo zuccherino 30g/l", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Weingut Max Ferd. Richter - Riesling Trocken '25", "p": 30.0, "t": [], "d": "Germania Mosella - residuo zuccherino 6-8 g/l", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Bibo Runge - Riesling Zero Alcool", "p": 30.0, "t": ["Novità"], "d": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g", "a": ["Anidride solforosa e solfiti"], "f": false}]}, {"name": "Vini invecchiati 👵", "notes": [], "items": [{"n": "Schloss Lieser - W. Sonnnenuhr Spatlese '18", "p": 50.0, "t": [], "d": "Agricoltura sostenibile - Germania Mosella - Residuo zuccherino 85 g/l", "a": ["Anidride solforosa e solfiti"], "f": false}, {"n": "Zilliken - Rausch Spatlese '11", "p": 115.0, "t": [], "d": "Agricoltura sostenibile - Germania Mosella - residuo zuccherino 70 g/l", "a": ["Anidride solforosa e solfiti"], "f": false}]}, {"name": "Amari, liquori, distillati 🥃", "notes": [], "items": [{"n": "Vodka Vietnamita - Nep Moi", "p": 5.0, "t": ["Specialità"], "d": "Vodka di riso, distillata da riso glutinoso appena raccolto, miscelata con vodka di grano per ottenere una gradazione alcolica al 39.5% Vol. Molto apprezzata dai consumatori locali, ma anche da giapponesi, coreani, e turisti provenienti da tutto il mondo, è diventata presto un simbolo della cultura vietnamita", "a": [], "f": false}, {"n": "Bud Spencer \"The Legend\"", "p": 5.0, "t": [], "d": "Liquore alla cannella ed al peperoncino", "a": [], "f": false}, {"n": "Nizurin", "p": 5.0, "t": [], "d": "Liquore alla nocciola piemontese (2100 bottiglie prodotte)", "a": [], "f": false}, {"n": "Grappa \"La cristallina\"", "p": 5.0, "t": [], "d": "Grappa bianca di dolcetto giovane (1230 bottiglie prodotte)", "a": [], "f": false}, {"n": "Grappa \"La magica\"", "p": 6.0, "t": [], "d": "Grappa di nebbiolo invecchiata (870 bottiglie prodotte)", "a": [], "f": false}, {"n": "Liquore di Tè Lapsang Souchong", "p": 7.0, "t": ["Specialità"], "d": "Whistler’s Storm: liquore dall’eleganza fumosa, un’acquavite lussuosa con sussurri di fumo di pino e un finale ricco e duraturo. Il Lapsang Souchong è famoso per il suo caratteristico sapore affumicato, ottenuto facendo essiccare le foglie di tè sui fuochi di legno di pino utilizza solo i migliori ingredienti naturali.", "a": [], "f": false}, {"n": "Vermouth Mu", "p": 6.5, "t": [], "d": "Sartine - ricetta classica - 1510 bottiglie prodotte - servito freddo", "a": [], "f": false}, {"n": "Liquore di Tè Earl Grey", "p": 7.0, "t": ["Specialità"], "d": "Whistler's Storm:  raffinato liquore ispirato al celebre tè Earl Grey, pensato per chi ama le note aromatiche e agrumate del bergamotto integrate a un corpo morbido e vellutato.", "a": [], "f": false}]}]};
 
-const PREFS = ["Senza glutine", "Senza lattosio", "Vegetariano", "Piccante", "Specialità", "Novità"];
-const state = { q: "", ex: new Set(), pref: new Set() };
-try { const s = JSON.parse(localStorage.getItem("gmv-filters") || "{}"); (s.ex || []).forEach(x => state.ex.add(x)); (s.pref || []).forEach(x => state.pref.add(x)); } catch (e) {}
-const save = () => { try { localStorage.setItem("gmv-filters", JSON.stringify({ ex: [...state.ex], pref: [...state.pref] })); } catch (e) {} };
+/* ---------- Brand → tokens ---------- */
+const hex2rgb = h => { h = h.replace("#", ""); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); };
+const rgb2hex = c => "#" + c.map(v => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+const lum = c => { const a = c.map(v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2]; };
+const contrast = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+const mix = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
+function hue(c) { const [r, g, b] = c.map(v => v / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn; if (!d) return 30; let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; return Math.round(h * 60 + 360) % 360; }
+function fit(c, bg, target, toward) { let t = 0, out = c; while (contrast(out, bg) < target && t < 1) { t += 0.04; out = mix(c, toward, t); } return out; }
+function applyBrand(hex) {
+  const c = hex2rgb(hex), root = document.documentElement.style;
+  const h = hue(c);
+  root.setProperty("--h", h);
+  root.setProperty("--brand", hex);
+  const darkInk = rgb2hex(mix([20, 14, 6], c, 0.08)), white = [255, 255, 255];
+  const onBrand = contrast(c, hex2rgb(darkInk)) >= contrast(c, white) ? darkInk : "#FFFFFF";
+  root.setProperty("--on-brand", onBrand);
+  document.getElementById("logo").classList.toggle("invert", onBrand === "#FFFFFF");
+  root.setProperty("--accent-l", rgb2hex(fit(c, white, 4.6, [0, 0, 0])));
+  root.setProperty("--accent-d", rgb2hex(fit(c, [28, 26, 24], 5, white)));
+}
 
+/* ---------- Data helpers ---------- */
+const EU = ["Glutine", "Crostacei", "Uova", "Pesce", "Arachidi", "Soia", "Latte", "Frutta a guscio", "Sedano", "Senape", "Sesamo", "Anidride solforosa e solfiti", "Lupini", "Molluschi"];
+const SHORT = { "Anidride solforosa e solfiti": "Solfiti" };
+const cats = MENU.categories.map((c, i) => ({ ...c, id: "c" + i }));
+const ALL_A = EU.filter(a => cats.some(c => c.items.some(it => it.a.includes(a))));
+const ALL_T = [...new Set(cats.flatMap(c => c.items.flatMap(it => it.t)))];
 const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
 const eur = v => v.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
-const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/gi, "d").toLowerCase();
-const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const tagHtml = t => t.map(x => `<span class="tag${x === "Piccante" ? " hot" : x === "Novità" ? " new" : ""}">${x === "Piccante" ? "🌶 " : ""}${x}</span>`).join("");
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+const ico = (id, cls = "i") => `<svg class="${cls}" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const fz = it => it.f ? `<svg class="i fz" role="img" aria-label="Surgelato"><use href="#i-snow"/></svg>` : "";
+const tagCls = t => t === "Novità" ? "new" : t === "Specialità" ? "spec" : t === "Piccante" ? "hot" : "";
+const tags = list => list.map(t => `<span class="tg ${tagCls(t)}">${t === "Piccante" ? ico("chili") : ""}${esc(t)}</span>`).join("");
 
-function match(it) {
-  if (it.a.some(x => state.ex.has(x))) return false;
-  for (const p of state.pref) if (!it.t.includes(p)) return false;
-  if (state.q) { const q = norm(state.q); if (!norm(it.n + " " + it.o + " " + it.d).includes(q)) return false; }
-  return true;
-}
+/* ---------- State ---------- */
+const st = { q: "", ex: new Set(), only: new Set(), cur: null };
+try { const s = JSON.parse(localStorage.getItem("pf-menu-filters") || "{}"); (s.ex || []).forEach(x => ALL_A.includes(x) && st.ex.add(x)); (s.only || []).forEach(x => ALL_T.includes(x) && st.only.add(x)); } catch (e) {}
+const save = () => { try { localStorage.setItem("pf-menu-filters", JSON.stringify({ ex: [...st.ex], only: [...st.only] })); } catch (e) {} };
+const ok = it => !it.a.some(a => st.ex.has(a)) && [...st.only].every(t => it.t.includes(t)) && (!st.q || norm(it.n + " " + it.d).includes(norm(st.q)));
+const visible = c => c.items.filter(ok);
 
+/* ---------- Render ---------- */
 function render() {
+  $("#menuTitle").textContent = "Menù " + MENU.menu;
+  $("#placeLine").textContent = MENU.name + " · " + MENU.address.split(",").slice(0, 2).join(",");
+  $("#addr").textContent = MENU.name + " · " + MENU.address;
   let html = "", total = 0;
-  C.forEach((c, ci) => {
-    const items = c.items.map((it, ii) => ({ it, ii })).filter(x => match(x.it));
-    if (!items.length) return;
-    total += items.length;
-    html += `<section id="${c.id}" data-cat="${c.id}"><div class="sec-head"><h2>${c.name}</h2><span>${items.length}</span></div>`;
-    if (c.note && !state.q) html += `<p class="intro">${c.note}</p>`;
-    html += `<ul class="list">` + items.map(({ it, ii }) => `<li><button class="dish" data-c="${ci}" data-i="${ii}">
-      <div class="row1"><span class="name">${it.n}</span><span class="price">${it.from ? "" : ""}${eur(it.p)}</span></div>
-      ${it.t.length ? `<div class="tags">${tagHtml(it.t)}</div>` : ""}
-      ${it.d ? `<p class="desc">${it.d}</p>` : it.o ? `<p class="desc">${it.o}</p>` : ""}
-      ${it.a.length ? `<p class="allerg"><b>Allergeni</b>${it.a.map(x => A[x]).join(" · ")}</p>` : ""}
+  for (const c of cats) {
+    const items = visible(c); if (!items.length) continue; total += items.length;
+    html += `<section id="${c.id}"><h2>${esc(c.name)}</h2>`;
+    if (!st.q) html += c.notes.map(n => `<p class="note"><b>${esc(n.n)}</b>${n.d ? " " + esc(n.d) : ""}${n.a.length ? `<small>Allergeni: ${esc(n.a.join(", "))}</small>` : ""}</p>`).join("");
+    html += `<ul class="list">` + items.map(it => `<li><button class="item" data-c="${c.id}" data-i="${c.items.indexOf(it)}">
+      <div class="r1"><span class="nm">${esc(it.n)}${fz(it)}</span><span class="pr">${eur(it.p)}</span></div>
+      ${it.t.length ? `<div class="tags">${tags(it.t)}</div>` : ""}
+      ${it.d ? `<p class="ds">${esc(it.d)}</p>` : ""}
+      ${it.a.length ? `<p class="al"><b>Allergeni</b>${esc(it.a.map(a => SHORT[a] || a).join(" · "))}</p>` : ""}
     </button></li>`).join("") + `</ul></section>`;
-  });
-  if (!total) html = `<div class="empty"><p>Nessun piatto corrisponde ${state.q ? `a “${esc(state.q)}”` : "ai filtri scelti"}.</p><button id="reset">Mostra tutto il menù</button></div>`;
+  }
+  if (!total) html = `<div class="empty"><p>${st.q ? `Nessun risultato per “${esc(st.q)}”.` : "Nessun piatto corrisponde ai filtri scelti."}</p><button id="resetAll" class="press">Mostra tutto il menù</button></div>`;
   $("#menu").innerHTML = html;
-  const r = $("#reset"); if (r) r.onclick = clearAll;
-  // chips mirror visible sections
-  $("#chips").innerHTML = C.filter(c => document.getElementById(c.id)).map(c => `<button class="chip" data-go="${c.id}">${c.name}</button>`).join("");
-  // active filter summary
-  const n = state.ex.size + state.pref.size;
+  $("#index").innerHTML = indexHtml();
+  const n = st.ex.size + st.only.size;
   $("#fCount").hidden = !n; $("#fCount").textContent = n;
-  const af = $("#activeFilters"); af.hidden = !n;
-  af.innerHTML = n ? `<span>${total} piatti ·</span>` + [...state.ex].map(x => `<button class="pill-x" data-rx="${x}">Senza ${A[x].toLowerCase()} ✕</button>`).join("") + [...state.pref].map(x => `<button class="pill-x" data-rp="${x}">${x} ✕</button>`).join("") : "";
-  observe();
+  const co = $("#chipsOn"); co.hidden = !n;
+  co.innerHTML = n ? `<span>${total} risultati</span>` + [...st.ex].map(a => `<button class="chip-x press" data-rx="${esc(a)}">Senza ${esc((SHORT[a] || a).toLowerCase())}${ico("x")}</button>`).join("") + [...st.only].map(t => `<button class="chip-x press" data-ro="${esc(t)}">${esc(t)}${ico("x")}</button>`).join("") : "";
+  spy();
 }
-function clearAll() { state.q = ""; $("#q").value = ""; state.ex.clear(); state.pref.clear(); save(); render(); }
+function indexHtml(inSheet) {
+  return cats.map(c => { const k = visible(c).length; return k ? `<button class="ix press" data-go="${c.id}" aria-current="${st.cur === c.id}"><b>${esc(c.name)}</b><span>${k} ${k === 1 ? "voce" : "voci"}</span></button>` : ""; }).join("");
+}
 
-/* Scrollspy + scroll-edge effect */
+/* ---------- Where am I ---------- */
 let io;
-function observe() {
+function spy() {
   io && io.disconnect();
-  const vis = new Map();
+  const seen = new Map();
   io = new IntersectionObserver(es => {
-    es.forEach(e => vis.set(e.target.id, e.isIntersecting ? e.boundingClientRect.top : null));
-    const cur = [...vis].filter(([, v]) => v !== null).sort((a, b) => a[1] - b[1])[0];
-    if (cur) setActive(cur[0]);
-  }, { rootMargin: "-70px 0px -55% 0px" });
-  document.querySelectorAll("section").forEach(s => io.observe(s));
-  const first = document.querySelector("section"); if (first) setActive(first.id);
+    es.forEach(e => seen.set(e.target.id, e.isIntersecting ? e.boundingClientRect.top : null));
+    const top = [...seen].filter(([, v]) => v !== null).sort((a, b) => a[1] - b[1])[0];
+    setCur(top ? top[0] : null);
+  }, { rootMargin: "-80px 0px -60% 0px" });
+  document.querySelectorAll("main section").forEach(s => io.observe(s));
 }
-function setActive(id) {
-  document.querySelectorAll(".chip").forEach(ch => {
-    const on = ch.dataset.go === id;
-    ch.setAttribute("aria-current", on);
-    if (on) { const box = $("#chips"); box.scrollTo({ left: ch.offsetLeft - box.clientWidth / 2 + ch.clientWidth / 2 }); }
-  });
+function setCur(id) {
+  if (st.cur === id) return; st.cur = id;
+  const c = cats.find(x => x.id === id);
+  $("#whereLbl").textContent = c ? c.name : "Tutte le categorie";
+  const pos = c ? cats.filter(x => visible(x).length).indexOf(c) + 1 : 0, tot = cats.filter(x => visible(x).length).length;
+  $("#whereNum").textContent = c ? `${pos}/${tot}` : `${tot}`;
+  document.querySelectorAll("#index .ix").forEach(b => b.setAttribute("aria-current", b.dataset.go === id));
 }
-addEventListener("scroll", () => { $("#rail").style.setProperty("--edge", $("#rail").getBoundingClientRect().top <= 1 ? 1 : 0); }, { passive: true });
+addEventListener("scroll", () => $("#bar").style.setProperty("--edge", $("#bar").getBoundingClientRect().top <= 1 ? 1 : 0), { passive: true });
+const goTo = id => { const s = document.getElementById(id); if (s) s.scrollIntoView({ behavior: RM.matches ? "auto" : "smooth" }); };
 
-document.addEventListener("click", e => {
-  const go = e.target.closest("[data-go]");
-  if (go) { const s = document.getElementById(go.dataset.go); s.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); setActive(go.dataset.go); return; }
-  const d = e.target.closest(".dish"); if (d) return openDish(C[d.dataset.c].items[d.dataset.i], d);
-  const rx = e.target.closest("[data-rx]"); if (rx) { state.ex.delete(rx.dataset.rx); save(); return render(); }
-  const rp = e.target.closest("[data-rp]"); if (rp) { state.pref.delete(rp.dataset.rp); save(); return render(); }
-});
-
-/* Search */
-$("#searchBtn").onclick = () => {
-  const open = $("#searchBox").hidden;
-  $("#searchBox").hidden = !open; $("#chips").hidden = open;
-  $("#searchBtn").setAttribute("aria-label", open ? "Chiudi ricerca" : "Cerca");
-  $("#searchBtn").innerHTML = open ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>' : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
-  if (open) $("#q").focus(); else if (state.q) { state.q = ""; $("#q").value = ""; render(); }
-};
-$("#q").addEventListener("input", e => { state.q = e.target.value.trim(); render(); scrollTo({ top: $("#rail").offsetTop }); });
-
-/* Bottom sheet with spring physics (damping ratio + response, Apple-style) */
-const sheet = $("#sheet"), scrim = $("#scrim"), body = $("#sheetBody");
-const RM = matchMedia("(prefers-reduced-motion: reduce)");
-let y = 0, v = 0, H = 0, target = 0, raf = 0, spring = { d: 1, r: 0.35 }, onRest = null, isOpen = false, lastFocus = null;
-const apply = () => {
-  const vis = y < 0 ? -rubber(-y, H) : y;
-  sheet.style.transform = `translateY(${vis}px)`;
-  scrim.style.opacity = Math.max(0, Math.min(1, 1 - y / H));
-};
-function rubber(o, dim, c = 0.55) { return (o * dim * c) / (dim + c * Math.abs(o)); }
-function animateTo(t, cfg, done) {
-  target = t; spring = cfg; onRest = done; cancelAnimationFrame(raf);
-  if (RM.matches) { y = t; v = 0; sheet.style.transition = "opacity 200ms"; apply(); onRest && onRest(); return; }
-  let last = performance.now();
-  const k = Math.pow(2 * Math.PI / cfg.r, 2), c = 4 * Math.PI * cfg.d / cfg.r;
+/* ---------- Sheet (springs: damping ratio + response) ---------- */
+const sheet = $("#sheet"), scrim = $("#scrim"), sbody = $("#sbody"), RM = matchMedia("(prefers-reduced-motion: reduce)");
+let y = 0, v = 0, H = 1, raf = 0, open = false, back = null, mode = "";
+const rubber = (o, d, c = 0.55) => (o * d * c) / (d + c * Math.abs(o));
+function paint() { sheet.style.transform = `translateY(${y < 0 ? -rubber(-y, H) : y}px)`; scrim.style.opacity = Math.max(0, Math.min(1, 1 - y / H)); }
+function springTo(t, d, r, done) {
+  cancelAnimationFrame(raf);
+  if (RM.matches) { y = t; v = 0; paint(); done && done(); return; }
+  const k = (2 * Math.PI / r) ** 2, c = 4 * Math.PI * d / r; let last = performance.now();
   const step = now => {
     let dt = Math.min(0.064, (now - last) / 1000); last = now;
-    while (dt > 0) { const h = Math.min(dt, 1 / 240); v += (-k * (y - target) - c * v) * h; y += v * h; dt -= h; }
-    apply();
-    if (Math.abs(v) < 4 && Math.abs(y - target) < 0.5) { y = target; v = 0; apply(); onRest && onRest(); return; }
-    raf = requestAnimationFrame(step);
+    while (dt > 0) { const h = Math.min(dt, 1 / 240); v += (-k * (y - t) - c * v) * h; y += v * h; dt -= h; }
+    paint();
+    if (Math.abs(v) < 4 && Math.abs(y - t) < 0.5) { y = t; v = 0; paint(); done && done(); } else raf = requestAnimationFrame(step);
   };
   raf = requestAnimationFrame(step);
 }
-function openSheet(html, from) {
-  body.innerHTML = html; body.scrollTop = 0; lastFocus = from || document.activeElement;
+function openSheet(title, html, from, m) {
+  mode = m; $("#sTitle").textContent = title; sbody.innerHTML = html; sbody.scrollTop = 0;
+  back = from || document.activeElement;
   sheet.style.visibility = "visible"; scrim.style.pointerEvents = "auto";
   H = sheet.getBoundingClientRect().height + 40;
-  if (!isOpen) { y = H; v = 0; }
-  isOpen = true; document.documentElement.style.overflow = "hidden";
-  animateTo(0, { d: 1, r: 0.38 });
-  sheet.setAttribute("tabindex", "-1"); sheet.focus({ preventScroll: true });
+  if (!open) { y = H; v = 0; }
+  open = true; document.documentElement.style.overflow = "hidden";
+  springTo(0, 1, 0.38);
+  sheet.tabIndex = -1; sheet.focus({ preventScroll: true });
 }
-function closeSheet(vel = 0) {
-  isOpen = false; v = vel;
-  animateTo(H, { d: 1, r: 0.32 }, () => { sheet.style.visibility = "hidden"; scrim.style.pointerEvents = "none"; document.documentElement.style.overflow = ""; lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true }); });
+function closeSheet(vel = 0, then) {
+  open = false; v = vel;
+  springTo(H, 1, 0.3, () => { sheet.style.visibility = "hidden"; scrim.style.pointerEvents = "none"; document.documentElement.style.overflow = ""; mode = ""; back && back.focus && back.focus({ preventScroll: true }); then && then(); });
 }
-scrim.addEventListener("pointerdown", () => closeSheet());
-addEventListener("keydown", e => { if (e.key === "Escape" && isOpen) closeSheet(); });
-
-// Drag: 1:1 tracking from the grab offset, velocity handoff, momentum projection
-const grab = $("#grab"); let drag = null;
-grab.addEventListener("pointerdown", e => {
-  cancelAnimationFrame(raf);            // interrupt: start from the live value
-  grab.setPointerCapture(e.pointerId);
-  drag = { startY: e.clientY, startPos: y, hist: [[e.timeStamp, e.clientY]] };
-});
-grab.addEventListener("pointermove", e => {
-  if (!drag) return;
-  y = drag.startPos + (e.clientY - drag.startY);
-  drag.hist.push([e.timeStamp, e.clientY]); if (drag.hist.length > 6) drag.hist.shift();
-  apply();
-});
+scrim.addEventListener("click", () => closeSheet());
+$("#sClose").addEventListener("click", () => closeSheet());
+addEventListener("keydown", e => { if (e.key === "Escape" && open) closeSheet(); });
+const grab = $("#grab"); let dr = null;
+grab.addEventListener("pointerdown", e => { if (e.target.closest(".close")) return; cancelAnimationFrame(raf); grab.setPointerCapture(e.pointerId); dr = { y0: e.clientY, p0: y, hist: [[e.timeStamp, e.clientY]] }; });
+grab.addEventListener("pointermove", e => { if (!dr) return; y = dr.p0 + e.clientY - dr.y0; dr.hist.push([e.timeStamp, e.clientY]); if (dr.hist.length > 6) dr.hist.shift(); paint(); });
 const release = e => {
-  if (!drag) return;
-  const h = drag.hist, a = h[0], b = h[h.length - 1];
-  const vel = b[0] > a[0] ? (b[1] - a[1]) / ((b[0] - a[0]) / 1000) : 0;
-  const project = (iv, d = 0.998) => (iv / 1000) * d / (1 - d);
-  const tapped = Math.abs(e.clientY - drag.startY) < 4;
-  drag = null;
-  if (tapped) return animateTo(0, { d: 1, r: 0.3 });
-  const end = y + project(vel);
-  if (end > H * 0.45 && vel > -50) closeSheet(vel);
-  else { v = vel; animateTo(0, { d: 0.8, r: 0.3 }); }  // drawer spring, bounce only after a gesture
+  if (!dr) return; const h = dr.hist, a = h[0], b = h[h.length - 1];
+  const vel = b[0] > a[0] ? (b[1] - a[1]) / ((b[0] - a[0]) / 1000) : 0; const moved = Math.abs(e.clientY - dr.y0); dr = null;
+  if (moved < 4) return springTo(0, 1, 0.3);
+  const end = y + (vel / 1000) * 0.998 / (1 - 0.998);
+  if (end > H * 0.45 && vel > -50) closeSheet(vel); else { v = vel; springTo(0, 0.8, 0.3); }
 };
-grab.addEventListener("pointerup", release);
-grab.addEventListener("pointercancel", release);
+grab.addEventListener("pointerup", release); grab.addEventListener("pointercancel", release);
 
-function openDish(it, from) {
-  const ex = it.a.filter(x => state.ex.has(x));
-  let h = `<div class="sh-title"><h3 id="shTitle">${it.n}</h3><span class="price">${eur(it.p)}</span></div>`;
-  if (it.o) h += `<p class="sh-sub">${it.o}</p>`;
-  if (it.t.length) h += `<div class="tags" style="margin-top:10px">${tagHtml(it.t)}</div>`;
-  if (it.d) h += `<p class="sh-desc">${it.d}</p>`;
-  if (it.cil) h += `<p class="sh-desc" style="margin-top:6px">Coriandolo disponibile su richiesta.</p>`;
-  if (it.opts) h += `<div class="sh-block"><p class="sh-label">Formati</p><ul class="opts">${it.opts.map(o => `<li><span>${o[0]}</span><span>${eur(o[1])}</span></li>`).join("")}</ul></div>`;
-  h += `<div class="sh-block"><p class="sh-label">Allergeni</p>${it.a.length ? `<div class="a-chips">${it.a.map(x => `<span class="a-chip">${A[x]}</span>`).join("")}</div>` : `<p class="a-none">Nessuno dei 14 allergeni principali dichiarato.</p>`}</div>`;
-  if (it.pair) h += `<div class="sh-block"><p class="sh-label">Abbinamento</p><button class="pair" data-go="vini" onclick="closeSheet()"><span style="font-size:1.4rem">🥂</span><span><b>${it.pair.name}</b>${it.pair.note} · ${it.pair.cat} ${eur(it.pair.price)}</span></button></div>`;
-  h += `<p class="note">Per allergie o intolleranze chiedi sempre al nostro personale prima di ordinare.</p>`;
-  openSheet(h, from);
+function dishSheet(c, it, from) {
+  let h = `<div class="s-price">${eur(it.p)}</div>`;
+  if (it.t.length) h += `<div class="tags" style="margin-top:10px">${tags(it.t)}</div>`;
+  if (it.d) h += `<p class="s-desc">${esc(it.d)}</p>`;
+  if (it.f) h += `<div class="frozen-row"><svg class="i fz" aria-hidden="true"><use href="#i-snow"/></svg>Prodotto surgelato</div>`;
+  h += `<div class="s-blk"><p class="s-lbl">Allergeni</p>${it.a.length ? `<div class="a-row">${it.a.map(a => `<span class="a-c">${esc(a)}</span>`).join("")}</div>` : `<p style="margin:0;color:var(--ink-2)">Nessun allergene indicato dal locale.</p>`}</div>`;
+  h += `<p class="s-note">Per allergie o intolleranze chiedi sempre al personale.</p>`;
+  openSheet(it.n, h, from, "dish");
 }
+function indexSheet(from) { openSheet("Categorie", `<div class="ix-grid">${indexHtml()}</div>`, from, "index"); }
+function drawFilters() {
+  const n = cats.reduce((s, c) => s + visible(c).length, 0);
+  sbody.innerHTML = `<div class="s-blk" style="margin-top:6px"><p class="s-lbl">Escludi allergeni</p><div class="f-grid">${ALL_A.map(a => `<button class="tog ex press" data-ex="${esc(a)}" aria-pressed="${st.ex.has(a)}">${esc(SHORT[a] || a)}</button>`).join("")}</div></div>
+    ${ALL_T.length ? `<div class="s-blk"><p class="s-lbl">Mostra solo</p><div class="f-grid">${ALL_T.map(t => `<button class="tog press" data-only="${esc(t)}" aria-pressed="${st.only.has(t)}">${t === "Piccante" ? ico("chili") : ""}${esc(t)}</button>`).join("")}</div></div>` : ""}
+    <div class="f-act"><button class="b-ghost press" data-clear>Azzera</button><button class="b-main press" data-done>Mostra ${n} ${n === 1 ? "risultato" : "risultati"}</button></div>`;
+}
+function langSheet(from) {
+  openSheet("Lingua", `<div class="lang"><button aria-pressed="true" data-lang="it">Italiano ${ico("check")}</button><button aria-pressed="false" data-lang="en">English</button></div>`, from, "lang");
+}
+let tT; function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(tT); tT = setTimeout(() => t.classList.remove("on"), 2600); }
 
-$("#filterBtn").onclick = e => {
-  const draw = () => {
-    const n = C.reduce((s, c) => s + c.items.filter(match).length, 0);
-    body.innerHTML = `<div class="sh-title"><h3 id="shTitle">Filtra il menù</h3></div>
-      <div class="sh-block"><p class="sh-label">Escludi allergeni</p><div class="f-grid">${Object.keys(A).map(k => `<button class="toggle ex" data-ex="${k}" aria-pressed="${state.ex.has(k)}">${A[k]}</button>`).join("")}</div></div>
-      <div class="sh-block"><p class="sh-label">Mostra solo</p><div class="f-grid">${PREFS.map(p => `<button class="toggle" data-pf="${p}" aria-pressed="${state.pref.has(p)}">${p}</button>`).join("")}</div></div>
-      <div class="f-actions"><button class="btn-ghost" data-clear>Azzera</button><button class="btn-primary" data-done>Mostra ${n} ${n === 1 ? "piatto" : "piatti"}</button></div>`;
-  };
-  body.onclick = ev => {
-    const x = ev.target.closest("[data-ex]"), p = ev.target.closest("[data-pf]");
-    if (x) { state.ex.has(x.dataset.ex) ? state.ex.delete(x.dataset.ex) : state.ex.add(x.dataset.ex); }
-    else if (p) { state.pref.has(p.dataset.pf) ? state.pref.delete(p.dataset.pf) : state.pref.add(p.dataset.pf); }
-    else if (ev.target.closest("[data-clear]")) { state.ex.clear(); state.pref.clear(); }
-    else if (ev.target.closest("[data-done]")) { body.onclick = null; closeSheet(); return; }
+/* ---------- Events ---------- */
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-go]");
+  if (g) { const id = g.dataset.go; if (open) closeSheet(0, () => goTo(id)); else goTo(id); return; }
+  const it = e.target.closest(".item"); if (it) { const c = cats.find(x => x.id === it.dataset.c); return dishSheet(c, c.items[+it.dataset.i], it); }
+  const rx = e.target.closest("[data-rx]"); if (rx) { st.ex.delete(rx.dataset.rx); save(); return render(); }
+  const ro = e.target.closest("[data-ro]"); if (ro) { st.only.delete(ro.dataset.ro); save(); return render(); }
+  if (e.target.closest("#resetAll")) { st.q = ""; $("#q").value = ""; st.ex.clear(); st.only.clear(); save(); return render(); }
+  if (mode === "filters") {
+    const x = e.target.closest("[data-ex]"), o = e.target.closest("[data-only]");
+    if (x) st.ex.has(x.dataset.ex) ? st.ex.delete(x.dataset.ex) : st.ex.add(x.dataset.ex);
+    else if (o) st.only.has(o.dataset.only) ? st.only.delete(o.dataset.only) : st.only.add(o.dataset.only);
+    else if (e.target.closest("[data-clear]")) { st.ex.clear(); st.only.clear(); }
+    else if (e.target.closest("[data-done]")) return closeSheet();
     else return;
-    save(); render(); draw();
-  };
-  openSheet("", e.currentTarget); draw();
+    save(); render(); drawFilters();
+  }
+  if (mode === "lang") { const l = e.target.closest("[data-lang]"); if (l && l.dataset.lang === "en") { closeSheet(); toast("In questa anteprima il menù è solo in italiano."); } else if (l) closeSheet(); }
+});
+$("#whereBtn").onclick = e => indexSheet(e.currentTarget);
+$("#filterBtn").onclick = e => { openSheet("Filtri", "", e.currentTarget, "filters"); drawFilters(); H = sheet.getBoundingClientRect().height + 40; };
+$("#langBtn").onclick = e => langSheet(e.currentTarget);
+$("#searchBtn").onclick = () => {
+  const show = $("#searchBox").hidden;
+  $("#searchBox").hidden = !show; $("#whereBtn").hidden = show;
+  $("#searchIcon").innerHTML = `<use href="#i-${show ? "x" : "search"}"/>`;
+  $("#searchBtn").setAttribute("aria-label", show ? "Chiudi ricerca" : "Cerca");
+  if (show) $("#q").focus(); else if (st.q) { st.q = ""; $("#q").value = ""; render(); }
 };
-const _openDish = openDish;
-openDish = (it, from) => { body.onclick = null; _openDish(it, from); };
+$("#q").addEventListener("input", e => { st.q = e.target.value.trim(); render(); const b = $("#bar"); if (b.getBoundingClientRect().top > 1) scrollTo({ top: b.offsetTop }); });
 
+/* ---------- Demo panel ---------- */
+const SW = [["#F5A81C", "Colore del locale"], ["#6E1410", "Rosso lacca"], ["#3F5A3A", "Verde salvia"], ["#1E3557", "Blu notte"], ["#16130F", "Nero"], ["#E9DCC6", "Sabbia"]];
+$("#swatches").innerHTML = SW.map(([c, l], i) => `<button style="background:${c}" data-sw="${c}" aria-label="${l}" aria-pressed="${i === 0}"></button>`).join("");
+$("#swatches").onclick = e => { const b = e.target.closest("[data-sw]"); if (!b) return; applyBrand(b.dataset.sw); document.querySelectorAll("[data-sw]").forEach(x => x.setAttribute("aria-pressed", x === b)); };
+$("#typeSeg").onclick = e => { const b = e.target.closest("[data-type]"); if (!b) return; document.documentElement.dataset.type = b.dataset.type; document.querySelectorAll("[data-type]").forEach(x => x.setAttribute("aria-pressed", x === b)); };
+$("#themeSeg").onclick = e => { const b = e.target.closest("[data-th]"); if (!b) return; if (b.dataset.th) document.documentElement.dataset.theme = b.dataset.th; else delete document.documentElement.dataset.theme; document.querySelectorAll("[data-th]").forEach(x => x.setAttribute("aria-pressed", x === b)); };
+
+applyBrand(MENU.brand);
 render();
 </script>
