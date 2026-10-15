@@ -9,6 +9,7 @@
  *     bookingUrl: "https://…/prenota",
  *     languages: [{ code: "it", label: "Italiano", url: "?lang=it", current: true }],
  *     theme: "auto",                          // "auto" | "light" | "dark"
+ *     titleStyle: "neutral",                  // "neutral" | "sign" | "classic"
  *     strings: {}                             // per tradurre i testi dell'interfaccia
  *   });
  *
@@ -122,7 +123,7 @@
 
   /* ---------- Mount ---------- */
   function mount(root, options) {
-    const o = Object.assign({ theme: "auto", languages: [], strings: {}, logo: null, bookingUrl: null, colors: null, storageKey: "pfm-filters" }, options || {});
+    const o = Object.assign({ theme: "auto", titleStyle: "neutral", languages: [], strings: {}, logo: null, bookingUrl: null, colors: null, storageKey: "pfm-filters" }, options || {});
     const T = Object.assign({}, STRINGS, o.strings);
     const D = o.data;
     const locale = o.locale || "it-IT", currency = o.currency || "EUR";
@@ -144,6 +145,8 @@
 
     /* -- markup di base -- */
     root.classList.add("pfm");
+    const setTitleStyle = s => { ["neutral", "sign", "classic"].forEach(x => root.classList.toggle("pfm-title-" + x, x === s)); };
+    setTitleStyle(["neutral", "sign", "classic"].includes(o.titleStyle) ? o.titleStyle : "neutral");
     const cur = (o.languages.find(l => l.current) || o.languages[0] || { code: "it" });
     root.innerHTML = `${SPRITE}
       <header class="pfm-band"><div class="pfm-wrap">
@@ -202,8 +205,8 @@
     function applyColors() {
       const dark = isDark();
       root.classList.toggle("pfm-dark", dark);
-      if (o.colors && o.colors.primary && o.colors.accent) {
-        const tk = computeTokens(o.colors.primary, o.colors.accent, dark);
+      if (o.colors && o.colors.primary) {
+        const tk = computeTokens(o.colors.primary, o.colors.accent || o.colors.primary, dark);   // accento facoltativo
         Object.keys(tk).forEach(k => root.style.setProperty(k, tk[k]));
       }
     }
@@ -408,7 +411,7 @@
     render();
     const h0 = location.hash.slice(1); if (h0 && root.querySelector("#" + CSS.escape(h0))) setTimeout(() => goTo(h0), 50);
 
-    return { render, setTheme(t) { o.theme = t; applyColors(); }, setColors(c) { o.colors = c; applyColors(); } };
+    return { render, setTitleStyle, setTheme(t) { o.theme = t; applyColors(); }, setColors(c) { o.colors = c; applyColors(); } };
   }
 
   global.PlateformMenuSkin = { mount, computeTokens, STRINGS };

@@ -45,6 +45,14 @@
   /* caratteri */
   --pfm-f-display: "Oswald", "Arial Narrow", "Helvetica Neue", sans-serif;
   --pfm-f-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --pfm-f-classic: "Newsreader", Georgia, "Times New Roman", serif;
+
+  /* stile dei titoli (nome del locale, categorie): scelto dal locale con titleStyle */
+  --pfm-title-font: var(--pfm-f-body);   /* Neutro (default) */
+  --pfm-title-weight: 700;
+  --pfm-title-case: none;
+  --pfm-title-track: -0.02em;
+  --pfm-title-lh: 1.05;
 
   /* misure */
   --pfm-max: 600px;
@@ -52,6 +60,8 @@
   --pfm-gutter-r: max(16px, env(safe-area-inset-right, 0px));
   --pfm-rail-h: 64px;             /* altezza reale della barra, misurata da JS */
 }
+.pfm.pfm-title-sign { --pfm-title-font: var(--pfm-f-display); --pfm-title-weight: 600; --pfm-title-case: uppercase; --pfm-title-track: 0.005em; --pfm-title-lh: 0.95; }
+.pfm.pfm-title-classic { --pfm-title-font: var(--pfm-f-classic); --pfm-title-weight: 600; --pfm-title-case: none; --pfm-title-track: -0.01em; --pfm-title-lh: 1.02; }
 .pfm.pfm-dark {
   --pfm-ground: hsl(var(--pfm-h) 10% 7%);
   --pfm-surface: hsl(var(--pfm-h) 9% 11%);
@@ -98,7 +108,7 @@
 .pfm-logo { flex: none; width: 66px; aspect-ratio: var(--pfm-logo-ratio, 1); }
 .pfm-logo.pfm-tint { background: var(--pfm-band-ink); -webkit-mask: var(--pfm-logo) center / contain no-repeat; mask: var(--pfm-logo) center / contain no-repeat; }
 .pfm-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
-.pfm-id h1 { font: 600 clamp(1.9rem, 4vw + 1rem, 2.6rem)/0.95 var(--pfm-f-display); text-transform: uppercase; letter-spacing: 0.005em; color: var(--pfm-band-ink); text-wrap: balance; }
+.pfm-id h1 { font: var(--pfm-title-weight) clamp(1.9rem, 4vw + 1rem, 2.6rem)/var(--pfm-title-lh) var(--pfm-title-font); text-transform: var(--pfm-title-case); letter-spacing: var(--pfm-title-track); color: var(--pfm-band-ink); text-wrap: balance; }
 .pfm-meta { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 0.86rem; color: var(--pfm-band-sub); }
 .pfm-meta b { color: var(--pfm-band-text); font-weight: 600; }
 
@@ -132,7 +142,7 @@
 .pfm-status { margin: 18px 4px 0; font-size: 0.92rem; color: var(--pfm-ink-2); }
 .pfm-sec { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + var(--pfm-rail-h) + 8px); padding-top: 28px; }
 .pfm-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 4px; }
-.pfm-sec h2 { font: 600 1.5rem/1.1 var(--pfm-f-display); text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; }
+.pfm-sec h2 { font: var(--pfm-title-weight) 1.5rem/1.1 var(--pfm-title-font); text-transform: var(--pfm-title-case); letter-spacing: var(--pfm-title-track); text-wrap: balance; }
 .pfm-sec-head span { font-size: 0.84rem; color: var(--pfm-ink-3); font-variant-numeric: tabular-nums; flex: none; }
 .pfm-note { margin: 8px 4px 0; max-width: 36rem; color: var(--pfm-ink-2); font-size: 0.92rem; line-height: 1.55; white-space: pre-line; }
 .pfm-note b { color: var(--pfm-ink); font-weight: 600; }

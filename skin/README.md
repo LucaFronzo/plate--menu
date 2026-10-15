@@ -48,6 +48,7 @@ Va servita da un server: aperta come file, il browser blocca il caricamento del 
       { code: "en", label: "English",  url: "?lang=en" }
     ],
     theme: "auto",                                       // "auto" segue il telefono; "light" | "dark" per forzare
+    titleStyle: "neutral",                               // "neutral" | "sign" | "classic", vedi §4
     locale: "it-IT", currency: "EUR",                    // formattazione dei prezzi
     strings: {}                                          // traduzioni dei testi della skin, vedi §7
   });
@@ -68,6 +69,7 @@ const menu = PlateformMenuSkin.mount(el, options);
 menu.render();                                        // ridisegna (per esempio dopo aver cambiato i dati)
 menu.setTheme("dark");                                // "auto" | "light" | "dark"
 menu.setColors({ primary: "#…", accent: "#…" });
+menu.setTitleStyle("classic");                        // "neutral" | "sign" | "classic", vedi §4
 ```
 
 `PlateformMenuSkin.computeTokens(primary, accent, dark)` è esposta a parte, se si preferisce calcolare i colori lato server (§3.4).
@@ -215,19 +217,34 @@ Se preferite non far calcolare i colori al browser, o volete evitare uno sfarfal
 
 ## 4. Font
 
-| Ruolo | Font | Pesi | Dove |
-| --- | --- | --- | --- |
-| Titoli | **Oswald** (condensato), sempre in maiuscolo | 500, 600 | Nome del locale (30–48 px), titoli delle categorie (24 px) |
-| Testo | **Be Vietnam Pro** | 400, 500, 600, 700 | Tutto il resto |
+Il testo è sempre **Be Vietnam Pro**. Per i titoli (nome del locale e categorie) il locale sceglie uno di tre stili, con l'opzione `titleStyle`.
 
-Scelta: Oswald dà il carattere da insegna; Be Vietnam Pro è molto leggibile a misure piccole e copre tutti gli accenti europei e il vietnamita, quindi regge menù in qualsiasi lingua.
+| Stile (`titleStyle`) | Font dei titoli | Aspetto | Adatto a |
+| --- | --- | --- | --- |
+| **Neutro** — `"neutral"` (default) | Be Vietnam Pro 700 | maiuscole e minuscole normali, spaziatura stretta | qualsiasi locale; lascia l'identità a logo e colori |
+| **Insegna** — `"sign"` | Oswald 600 (condensato) | tutto maiuscolo, da insegna | street food, burger, pizzerie moderne, birrerie, cucine etniche informali |
+| **Classico** — `"classic"` | Newsreader 600 (serif) | maiuscole e minuscole normali | ristoranti, enoteche, pasticcerie, trattorie |
+
+Be Vietnam Pro è molto leggibile a misure piccole e copre tutti gli accenti europei e il vietnamita, quindi regge menù in qualsiasi lingua. Lo stile Insegna allarga visivamente i nomi lunghi: per categorie con nomi molto lunghi è meglio Neutro o Classico.
+
+Lo stile dei titoli è un insieme di variabili su `.pfm`: `--pfm-title-font`, `--pfm-title-weight`, `--pfm-title-case`, `--pfm-title-track`, `--pfm-title-lh`. La skin applica la classe `pfm-title-neutral`, `pfm-title-sign` o `pfm-title-classic`, e lo stile si cambia al volo con `menu.setTitleStyle("classic")`.
+
+**Font da caricare**
+
+| Font | Pesi | Serve per |
+| --- | --- | --- |
+| Be Vietnam Pro | 400, 500, 600, 700 | sempre |
+| Oswald | 600 | solo stile Insegna |
+| Newsreader | 600 (asse ottico 6–72) | solo stile Classico |
+
+Conviene caricare solo il font dei titoli che il locale usa.
 
 **Scala tipografica** (rem = 16 px):
 
 | Elemento | Misura | Peso | Note |
 | --- | --- | --- | --- |
-| Nome del locale | `clamp(1.9rem, 4vw + 1rem, 2.6rem)`; 3rem su desktop | Oswald 600 | interlinea 0.95, maiuscolo |
-| Titolo categoria | 1.5rem | Oswald 600 | maiuscolo |
+| Nome del locale | `clamp(1.9rem, 4vw + 1rem, 2.6rem)`; 3rem su desktop | stile titoli | |
+| Titolo categoria | 1.5rem | stile titoli | |
 | Titolo nella scheda | 1.45rem | Be Vietnam Pro 700 | |
 | Nome del piatto | 1.04rem | 600 | |
 | Prezzo | 1rem | 600 | cifre tabellari (allineate) |
@@ -235,7 +252,31 @@ Scelta: Oswald dà il carattere da insegna; Be Vietnam Pro è molto leggibile a 
 | Etichette | 0.78rem | 600 | |
 | Allergeni, conteggi | 0.82–0.84rem | 400/600 | |
 
-**Caricamento.** L'esempio usa Google Fonts per comodità. In produzione conviene ospitare i file `woff2` sul nostro dominio: è più veloce, e in Italia il collegamento diretto a Google Fonts ha già sollevato contestazioni per il trasferimento dell'IP dei visitatori. Basta un `fonts.css` con i `@font-face` dei pesi indicati (si scaricano con google-webfonts-helper o dal pacchetto `@fontsource`), con `font-display: swap`. I fallback (`Arial Narrow`, `system-ui`) sono già nei token `--pfm-f-display` e `--pfm-f-body`.
+**Caricamento.** L'esempio usa Google Fonts per comodità. In produzione conviene ospitare i file `woff2` sul nostro dominio: è più veloce, e in Italia il collegamento diretto a Google Fonts ha già sollevato contestazioni per il trasferimento dell'IP dei visitatori. Basta un `fonts.css` con i `@font-face` dei pesi indicati (si scaricano con google-webfonts-helper o dal pacchetto `@fontsource`), con `font-display: swap`. I fallback (`Arial Narrow`, `Georgia`, `system-ui`) sono già nei token `--pfm-f-display`, `--pfm-f-classic` e `--pfm-f-body`.
+
+---
+
+## 4bis. Pannello di personalizzazione (back office)
+
+Cosa può scegliere il locale, e cosa no.
+
+| Impostazione | Scelta | Note |
+| --- | --- | --- |
+| Skin | Attuale / Nuova | |
+| Stile dei titoli | Neutro / Insegna / Classico | con anteprima dal vivo |
+| Colore primario | selettore libero + 6–8 combinazioni pronte | obbligatorio per la nuova skin (in mancanza: default Plateform) |
+| Colore d'accento | selettore libero, facoltativo | se vuoto, la skin usa il primario e ricava bianco/nero dove serve |
+| Logo | caricamento + "Ricolora con l'accento" sì/no | sì = `mode: "tint"`, no = `"original"` |
+| Tema | Automatico / Sempre chiaro / Sempre scuro | default Automatico |
+
+**Si personalizzano solo due colori.** Tutti gli altri (testi, grigi, fondi tenui, colore della pillola attiva, versione scura) si ricavano da questi due con `computeTokens`. I colori di significato (piccante, surgelato, avvisi allergeni) restano fissi e non si possono cambiare. Lasciare liberi più colori porterebbe a combinazioni illeggibili, soprattutto in tema scuro.
+
+**Combinazioni pronte.** Accanto ai due selettori conviene offrire alcune coppie già provate, che il locale può scegliere con un tocco e poi ritoccare. Esempi già calcolati sono in §3.5.
+
+**Controlli nel pannello**
+- Anteprima dal vivo della pagina in chiaro e in scuro, su telefono, aggiornata mentre si scelgono colori e stile.
+- Se l'accento ha contrasto sotto 3:1 sul primario, avviso "Il logo sarà mostrato in bianco/nero per restare leggibile", invece di bloccare la scelta.
+- Pulsante "Ripristina i colori predefiniti".
 
 ---
 

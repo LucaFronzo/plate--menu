@@ -8,7 +8,7 @@
   <!-- Font: in produzione meglio ospitarli sul nostro dominio (vedi README.md, "Font") -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600&family=Oswald:wght@500;600&display=swap">
   <link rel="stylesheet" href="menu-skin.css">
   <style>html, body { margin: 0; background: #F7F4F3; }</style>
 </head>
@@ -29,7 +29,8 @@
         logo: { src: "example/logo.png", mode: "tint" },
         bookingUrl: "https://goodmorningvietnam.plateform.app/",
         languages: [{ code: "it", label: "Italiano", current: true }],
-        theme: "auto"
+        theme: "auto",
+        titleStyle: new URLSearchParams(location.search).get("titoli") || "sign"   // prova ?titoli=neutral | sign | classic
       }))
       .catch(() => {
         document.getElementById("menu").textContent =
