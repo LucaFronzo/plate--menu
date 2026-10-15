@@ -413,7 +413,7 @@ function spy() {
   io = new IntersectionObserver(es => {
     es.forEach(e => seen.set(e.target.id, e.isIntersecting ? e.boundingClientRect.top : null));
     const top = [...seen].filter(([, v]) => v !== null).sort((a, b) => a[1] - b[1])[0];
-    if (top) setCur(top[0]);
+    if (top && !navLock) setCur(top[0]);
   }, { rootMargin: `-${$("#rail").offsetHeight + 24}px 0px -55% 0px` });
   document.querySelectorAll("main section").forEach(s => io.observe(s));
   if (!st.cur) { const f = document.querySelector("main section"); if (f) setCur(f.id); }
@@ -426,9 +426,19 @@ function setCur(id) {
 }
 addEventListener("scroll", () => $("#rail").style.setProperty("--edge", $("#rail").getBoundingClientRect().top <= 1 ? 1 : 0), { passive: true });
 addEventListener("resize", () => { measureRail(); spy(); });
+// While a tap-driven scroll runs, the rail stays on the chosen category instead of chasing every section it passes
+let navLock = false, lockTimer = 0;
+function lockNav() {
+  navLock = true; clearTimeout(lockTimer);
+  const release = () => { navLock = false; removeEventListener("scroll", onLockScroll); };
+  const onLockScroll = () => { clearTimeout(lockTimer); lockTimer = setTimeout(release, 140); };
+  addEventListener("scroll", onLockScroll, { passive: true });
+  lockTimer = setTimeout(release, 900);
+}
 function goTo(id) {
   const s = document.getElementById(id); if (!s) return;
-  s.scrollIntoView({ behavior: RM.matches ? "auto" : "smooth" }); setCur(id);
+  setCur(id); lockNav();
+  s.scrollIntoView({ behavior: RM.matches ? "auto" : "smooth" });
   try { history.replaceState(history.state, "", "#" + id); } catch (e) {}
 }
 
