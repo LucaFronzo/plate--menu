@@ -1,4 +1,4 @@
-# Skin "Apple" per il menù digitale Plateform
+# Skin "PlateStyle" per il menù digitale Plateform
 
 Una skin alternativa a quella attuale per le pagine `/menu/...` dei locali. È pensata per il telefono (la maggior parte degli ospiti arriva dal QR sul tavolo) e funziona anche su tablet e computer.
 
