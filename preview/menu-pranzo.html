@@ -17,14 +17,15 @@
   --surface: #FFFFFF;
   --ink: hsl(var(--h) 18% 10%);
   --ink-2: hsl(var(--h) 8% 34%);
-  --ink-3: hsl(var(--h) 6% 46%);
+  --ink-3: hsl(var(--h) 6% 40%);
   --line: hsl(var(--h) 14% 89%);
   --fill: hsl(var(--h) 18% 93%);
   --soft: hsl(var(--h) 70% 94%);
   --soft-ink: hsl(var(--h) 60% 26%);
   --hot: #B42318;
   --frost: #2563A8;
-  --material: hsla(var(--h), 22%, 96%, 0.78);
+  --material: hsla(var(--h), 22%, 96%, 0.9);
+  --warn: #9A3412;
   --scrim: rgba(12, 8, 4, 0.44);
   --shadow: 0 -10px 40px rgba(20, 12, 4, 0.16);
   --lift: 0 1px 2px rgba(20, 12, 4, 0.05), 0 6px 20px rgba(20, 12, 4, 0.05);
@@ -39,7 +40,7 @@
     --line: hsl(var(--h) 8% 19%); --fill: hsl(var(--h) 8% 16%);
     --soft: hsl(var(--h) 40% 16%); --soft-ink: hsl(var(--h) 80% 76%);
     --hot: #FF8A7A; --frost: #8CC4FF;
-    --material: hsla(var(--h), 10%, 7%, 0.74); --scrim: rgba(0, 0, 0, 0.62);
+    --material: hsla(var(--h), 10%, 7%, 0.88); --scrim: rgba(0, 0, 0, 0.62); --warn: #FDBA74;
     --shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); --lift: none;
     color-scheme: dark;
   }
@@ -51,7 +52,7 @@
   --line: hsl(var(--h) 8% 19%); --fill: hsl(var(--h) 8% 16%);
   --soft: hsl(var(--h) 40% 16%); --soft-ink: hsl(var(--h) 80% 76%);
   --hot: #FF8A7A; --frost: #8CC4FF;
-  --material: hsla(var(--h), 10%, 7%, 0.74); --scrim: rgba(0, 0, 0, 0.62);
+  --material: hsla(var(--h), 10%, 7%, 0.88); --scrim: rgba(0, 0, 0, 0.62); --warn: #FDBA74;
   --shadow: 0 -10px 40px rgba(0, 0, 0, 0.5); --lift: none;
   color-scheme: dark;
 }
@@ -78,7 +79,7 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
 .band { background: var(--brand); color: var(--on-brand); }
 .band .wrap { padding-block: 14px 26px; }
 .band-top { display: flex; justify-content: flex-end; gap: 8px; }
-.pill { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; text-decoration: none; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 999px; font-size: 0.88rem; font-weight: 600; text-decoration: none; }
 .pill.ghost { background: color-mix(in srgb, var(--on-brand) 10%, transparent); }
 .pill.solid { background: var(--on-brand); color: var(--brand); }
 .pill svg.i { width: 17px; height: 17px; }
@@ -90,10 +91,11 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
 
 /* Index: every category visible at once */
 .index { margin-top: -12px; background: var(--surface); border-radius: 20px; box-shadow: var(--lift); padding: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; position: relative; }
-.ix { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 60px; padding: 10px 12px; border-radius: 14px; text-align: left; }
+.ix { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 44px; padding: 8px 12px; border-radius: 14px; text-align: left; }
 .ix:hover { background: var(--fill); }
 .ix b { font-weight: 600; font-size: 0.95rem; line-height: 1.25; }
 .ix span { font-size: 0.82rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ix .k { display: none; }
 .ix[aria-current="true"] { background: var(--soft); }
 .ix[aria-current="true"] b { color: var(--soft-ink); }
 
@@ -106,25 +108,22 @@ svg.i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor;
   margin-left: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); margin-right: calc(-1 * max(16px, env(safe-area-inset-right, 0px)));
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .tools { display: flex; gap: 8px; align-items: center; padding-top: 14px; }
-.chips { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain; padding: 2px 24px 2px 2px; }
+.chips { flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; -webkit-mask-image: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 24px), transparent); mask-image: linear-gradient(90deg, transparent, #000 10px, #000 calc(100% - 24px), transparent); scrollbar-width: none; overscroll-behavior-x: contain; padding: 2px 24px 2px 10px; }
 .chips::-webkit-scrollbar { display: none; }
 .chip { flex: none; height: 44px; padding: 0 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); color: var(--ink-2); font-size: 0.95rem; font-weight: 600; white-space: nowrap; transition: background 160ms, color 160ms, transform 120ms cubic-bezier(.2,.8,.2,1); }
 .chip:active { transform: scale(0.96); transition-duration: 40ms; }
-.chip[aria-current="true"] { background: var(--accent); color: var(--on-accent); }
+.chip[aria-current="true"] { background: var(--brand); color: var(--on-brand); }
 .ibtn.all { background: var(--ink); color: var(--surface); }
-.where { flex: 1; min-width: 0; height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 14px 0 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); text-align: left; }
-.where span { flex: 1; min-width: 0; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.where small { font-size: 0.76rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
-.where svg.i { width: 18px; height: 18px; color: var(--ink-3); }
+.ibtn.on { background: var(--brand); color: var(--on-brand); }
 .ibtn { position: relative; width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); }
-.count { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--accent); color: var(--on-accent); font-size: 0.8rem; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.count { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--brand); color: var(--on-brand); font-size: 0.8rem; font-weight: 700; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
 .search { flex: 1; min-width: 0; height: 44px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border-radius: 14px; background: var(--surface); box-shadow: var(--lift); }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; font-size: 1rem; caret-color: var(--accent); }
 .search input::placeholder { color: var(--ink-3); }
 .search svg.i { color: var(--ink-3); width: 18px; height: 18px; }
 
 .chips-on { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-top: 4px; font-size: 0.82rem; color: var(--ink-2); }
-.chip-x { display: inline-flex; align-items: center; gap: 4px; height: 30px; padding: 0 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 0.8rem; font-weight: 500; }
+.chip-x { display: inline-flex; align-items: center; gap: 4px; height: 36px; padding: 0 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 0.8rem; font-weight: 500; }
 .chip-x svg.i { width: 13px; height: 13px; }
 
 /* Sections */
@@ -133,7 +132,7 @@ main { padding-block: 4px 32px; }
 .content { min-width: 0; }
 section { scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 72px); padding-top: 32px; }
 h2 { margin: 0 4px; font: 600 1.55rem/1.15 var(--f-title); letter-spacing: -0.015em; text-wrap: balance; }
-.note { margin: 10px 4px 0; max-width: 60ch; color: var(--ink-2); font-size: 0.92rem; line-height: 1.55; white-space: pre-line; }
+.note { margin: 10px 4px 0; max-width: 36rem; color: var(--ink-2); font-size: 0.92rem; line-height: 1.55; white-space: pre-line; }
 .note b { color: var(--ink); font-weight: 600; }
 .note small { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--ink-3); }
 .list { list-style: none; margin: 14px 0 0; padding: 0; background: var(--surface); border-radius: 20px; box-shadow: var(--lift); overflow: hidden; }
@@ -148,11 +147,17 @@ h2 { margin: 0 4px; font: 600 1.55rem/1.15 var(--f-title); letter-spacing: -0.01
 .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
 .tg { display: inline-flex; align-items: center; gap: 3px; height: 24px; padding: 0 8px; border-radius: 7px; background: var(--fill); color: var(--ink-2); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.005em; }
 .tg.spec { background: var(--soft); color: var(--soft-ink); }
-.tg.new { background: var(--accent); color: var(--on-accent); }
+.tg.new { background: var(--brand); color: var(--on-brand); }
 .tg.hot { background: transparent; color: var(--hot); padding-left: 0; }
 .tg svg.i { width: 13px; height: 13px; stroke-width: 2.2; }
-.ds { max-width: 62ch; margin: 6px 0 0; color: var(--ink-2); font-size: 0.95rem; line-height: 1.5; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.al { margin: 8px 0 0; font-size: 0.82rem; color: var(--ink-3); }
+.ds { display: block; max-width: 36rem; margin: 6px 0 0; color: var(--ink-2); font-size: 0.95rem; line-height: 1.5; white-space: pre-line; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.al { display: block; margin: 8px 0 0; font-size: 0.82rem; color: var(--ink-3); }
+.al.unk { color: var(--warn); font-weight: 500; }
+.item:focus-visible { outline-offset: -3px; border-radius: 20px; }
+.r1, .tags { display: flex; }
+.nm, .pr { display: block; }
+.f-note { margin: 14px 0 0; font-size: 0.86rem; color: var(--ink-2); }
+input[type="search"]::-webkit-search-cancel-button { filter: grayscale(1); opacity: 0.6; }
 .al b { font-weight: 600; color: var(--ink-2); margin-right: 4px; }
 .empty { padding: 56px 12px; text-align: center; color: var(--ink-2); }
 .empty button { margin-top: 14px; height: 44px; padding: 0 20px; border-radius: 12px; background: var(--accent); color: var(--on-accent); font-weight: 600; }
@@ -184,7 +189,7 @@ footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
 .grab { touch-action: none; cursor: grab; user-select: none; display: flex; align-items: center; gap: 12px; padding: 22px max(22px, env(safe-area-inset-right, 0px)) 6px max(22px, env(safe-area-inset-left, 0px)); position: relative; }
 .grab::before { content: ""; position: absolute; top: 8px; left: 50%; width: 38px; height: 5px; margin-left: -19px; border-radius: 3px; background: var(--line); }
 .grab h3 { flex: 1; min-width: 0; margin: 0; font: 600 1.4rem/1.2 var(--f-title); letter-spacing: -0.015em; text-wrap: balance; }
-.close { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--fill); flex: none; }
+.close { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--fill); flex: none; }
 .close svg.i { width: 16px; height: 16px; }
 .sbody { overflow-y: auto; overscroll-behavior: contain; padding: 4px max(22px, env(safe-area-inset-right, 0px)) 28px max(22px, env(safe-area-inset-left, 0px)); }
 .s-price { font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -198,14 +203,14 @@ footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
 .s-note { margin-top: 22px; font-size: 0.8rem; color: var(--ink-3); }
 .ix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 .f-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.tog { height: 40px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
+.tog { height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.9rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; }
 .tog[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
 .tog.ex[aria-pressed="true"] { background: var(--hot); border-color: var(--hot); color: #fff; }
 .tog svg.i { width: 15px; height: 15px; }
 .f-act { display: flex; gap: 10px; margin-top: 26px; }
 .f-act button { flex: 1; height: 52px; border-radius: 14px; font-weight: 600; }
 .b-ghost { background: var(--fill); }
-.b-main { background: var(--accent); color: var(--on-accent); }
+.b-main { background: var(--brand); color: var(--on-brand); }
 .lang { display: grid; gap: 4px; }
 .lang button { height: 52px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; border-radius: 14px; font-weight: 500; }
 .lang button[aria-pressed="true"] { background: var(--fill); font-weight: 600; }
@@ -215,7 +220,7 @@ footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
 
 @media (prefers-reduced-motion: reduce) { * { transition-duration: 0ms !important; } }
 @media (prefers-reduced-transparency: reduce) { .bar { background: var(--ground); -webkit-backdrop-filter: none; backdrop-filter: none; } }
-@media (prefers-contrast: more) { .list, .index, .where, .ibtn, .search { box-shadow: none; border: 1px solid var(--ink-3); } }
+@media (prefers-contrast: more) { .list, .index, .ibtn, .chip, .search { box-shadow: none; border: 1px solid var(--ink-3); } }
 @media (min-width: 560px) { .index, .ix-grid { grid-template-columns: 1fr 1fr 1fr; } .logo { width: 108px; } }
 
 /* Desktop: index becomes a sticky sidebar, search always open, details in a floating panel */
@@ -225,6 +230,7 @@ footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
   .id h1 { font-size: 2.6rem; }
   .shell { display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 48px; align-items: start; }
   .index { position: sticky; top: 24px; margin-top: -20px; grid-template-columns: 1fr; gap: 0; padding: 10px; max-height: calc(100vh - 48px); overflow-y: auto; }
+  .ix .k { display: inline; }
   .ix { flex-direction: row; justify-content: space-between; align-items: center; min-height: 44px; padding: 8px 12px; }
   .ix b { font-size: 0.95rem; }
   .content { max-width: 680px; }
@@ -271,11 +277,12 @@ footer a { color: var(--ink-2); font-weight: 600; text-underline-offset: 3px; }
   <div class="content">
     <div class="tools" id="tools">
       <label class="search" id="searchBox"><svg class="i"><use href="#i-search"/></svg><input id="q" type="search" placeholder="Cerca nel menù" autocomplete="off" aria-label="Cerca nel menù"></label>
-      <button class="ibtn press" id="filterBtn" aria-label="Filtri e allergeni"><svg class="i"><use href="#i-filter"/></svg><span class="count" id="fCount" hidden></span></button>
+      <button class="ibtn press fbtn" id="filterBtn" aria-label="Filtri e allergeni"><svg class="i"><use href="#i-filter"/></svg><span class="count" hidden></span></button>
     </div>
     <nav class="bar" id="bar" aria-label="Vai alla categoria">
       <button class="ibtn all press" id="allBtn" aria-haspopup="dialog" aria-label="Tutte le categorie"><svg class="i"><use href="#i-grid"/></svg></button>
       <div class="chips" id="chips"></div>
+      <button class="ibtn press fbtn" id="filterBtn2" aria-label="Filtri e allergeni"><svg class="i"><use href="#i-filter"/></svg><span class="count" hidden></span></button>
     </nav>
     <main><div class="chips-on" id="chipsOn" hidden></div><div id="menu"></div></main>
   </div>
@@ -350,8 +357,8 @@ const tags = list => list.map(t => `<span class="tg ${tagCls(t)}">${t === "Picca
 
 /* ---------- State ---------- */
 const st = { q: "", ex: new Set(), only: new Set(), cur: null };
-try { const s = JSON.parse(localStorage.getItem("pf-menu-filters") || "{}"); (s.ex || []).forEach(x => ALL_A.includes(x) && st.ex.add(x)); (s.only || []).forEach(x => ALL_T.includes(x) && st.only.add(x)); } catch (e) {}
-const save = () => { try { localStorage.setItem("pf-menu-filters", JSON.stringify({ ex: [...st.ex], only: [...st.only] })); } catch (e) {} };
+try { const s = JSON.parse(sessionStorage.getItem("pf-menu-filters") || "{}"); (s.ex || []).forEach(x => ALL_A.includes(x) && st.ex.add(x)); (s.only || []).forEach(x => ALL_T.includes(x) && st.only.add(x)); } catch (e) {}
+const save = () => { try { sessionStorage.setItem("pf-menu-filters", JSON.stringify({ ex: [...st.ex], only: [...st.only] })); } catch (e) {} };
 const ok = it => !it.a.some(a => st.ex.has(a)) && [...st.only].every(t => it.t.includes(t)) && (!st.q || norm(it.n + " " + it.d).includes(norm(st.q)));
 const visible = c => c.items.filter(ok);
 
@@ -366,10 +373,10 @@ function render() {
     html += `<section id="${c.id}"><h2>${esc(c.name)}</h2>`;
     if (!st.q) html += c.notes.map(n => `<p class="note"><b>${esc(n.n)}</b>${n.d ? " " + esc(n.d) : ""}${n.a.length ? `<small>Allergeni: ${esc(n.a.join(", "))}</small>` : ""}</p>`).join("");
     html += `<ul class="list">` + items.map(it => `<li><button class="item" data-c="${c.id}" data-i="${c.items.indexOf(it)}">
-      <div class="r1"><span class="nm">${esc(it.n)}${fz(it)}</span><span class="pr">${eur(it.p)}</span></div>
-      ${it.t.length ? `<div class="tags">${tags(it.t)}</div>` : ""}
-      ${it.d ? `<p class="ds">${esc(it.d)}</p>` : ""}
-      ${it.a.length ? `<p class="al"><b>Allergeni</b>${esc(it.a.map(a => SHORT[a] || a).join(" · "))}</p>` : ""}
+      <span class="r1"><span class="nm">${esc(it.n)}${fz(it)}</span><span class="pr">${eur(it.p)}</span></span>
+      ${it.t.length ? `<span class="tags">${tags(it.t)}</span>` : ""}
+      ${it.d ? `<span class="ds">${esc(it.d.replace(/\n\s*\n+/g, "\n"))}</span>` : ""}
+      ${it.a.length ? `<span class="al"><b>Allergeni</b>${esc(it.a.map(a => SHORT[a] || a).join(" · "))}</span>` : st.ex.size ? `<span class="al unk">Allergeni non indicati: chiedi al personale</span>` : ""}
     </button></li>`).join("") + `</ul></section>`;
   }
   if (!total) html = `<div class="empty"><p>${st.q ? `Nessun risultato per “${esc(st.q)}”.` : "Nessun piatto corrisponde ai filtri scelti."}</p><button id="resetAll" class="press">Mostra tutto il menù</button></div>`;
@@ -377,13 +384,13 @@ function render() {
   $("#index").innerHTML = indexHtml();
   $("#chips").innerHTML = cats.filter(c => visible(c).length).map(c => `<button class="chip" data-go="${c.id}" aria-current="${st.cur === c.id}">${esc(c.name)}</button>`).join("");
   const n = st.ex.size + st.only.size;
-  $("#fCount").hidden = !n; $("#fCount").textContent = n;
+  document.querySelectorAll(".fbtn").forEach(b => { b.classList.toggle("on", !!n); const c = b.querySelector(".count"); c.hidden = !n; c.textContent = n; b.setAttribute("aria-label", n ? `Filtri e allergeni, ${n} attivi` : "Filtri e allergeni"); });
   const co = $("#chipsOn"); co.hidden = !n;
   co.innerHTML = n ? `<span>${total} risultati</span>` + [...st.ex].map(a => `<button class="chip-x press" data-rx="${esc(a)}">Senza ${esc((SHORT[a] || a).toLowerCase())}${ico("x")}</button>`).join("") + [...st.only].map(t => `<button class="chip-x press" data-ro="${esc(t)}">${esc(t)}${ico("x")}</button>`).join("") : "";
   spy();
 }
 function indexHtml(inSheet) {
-  return cats.map(c => { const k = visible(c).length; return k ? `<button class="ix press" data-go="${c.id}" aria-current="${st.cur === c.id}"><b>${esc(c.name)}</b><span>${k} ${k === 1 ? "voce" : "voci"}</span></button>` : ""; }).join("");
+  return cats.map(c => { const k = visible(c).length; return k ? `<button class="ix press" data-go="${c.id}" aria-current="${st.cur === c.id}"><b>${esc(c.name)}</b><span class="k">${k}</span></button>` : ""; }).join("");
 }
 
 /* ---------- Where am I ---------- */
@@ -395,7 +402,7 @@ function spy() {
     es.forEach(e => seen.set(e.target.id, e.isIntersecting ? e.boundingClientRect.top : null));
     const top = [...seen].filter(([, v]) => v !== null).sort((a, b) => a[1] - b[1])[0];
     setCur(top ? top[0] : null);
-  }, { rootMargin: "-80px 0px -60% 0px" });
+  }, { rootMargin: "-110px 0px -60% 0px" });
   document.querySelectorAll("main section").forEach(s => io.observe(s));
 }
 function setCur(id) {
@@ -425,21 +432,27 @@ function springTo(t, d, r, done) {
   };
   raf = requestAnimationFrame(step);
 }
+let pushed = false;
+const setInert = on => document.querySelectorAll("body > header, body > .shell, body > footer, body > aside, .band, .shell, footer, .demo").forEach(el => { el.inert = on; });
 function openSheet(title, html, from, m) {
   mode = m; $("#sTitle").textContent = title; sbody.innerHTML = html; sbody.scrollTop = 0;
   back = from || document.activeElement;
   sheet.style.visibility = "visible"; scrim.style.pointerEvents = "auto";
   H = sheet.getBoundingClientRect().height + 40;
   if (!open) { y = H; v = 0; }
+  if (!open) { setInert(true); try { if (!pushed) { history.pushState({ pfSheet: 1 }, ""); pushed = true; } } catch (e) {} }
   open = true; document.documentElement.style.overflow = "hidden";
   springTo(0, 1, 0.38);
   sheet.tabIndex = -1; sheet.focus({ preventScroll: true });
 }
-function closeSheet(vel = 0, then) {
-  open = false; v = vel;
+function closeSheet(vel = 0, then, fromHistory) {
+  if (!open) return;
+  open = false; v = vel; setInert(false);
+  if (pushed && !fromHistory) { pushed = false; try { history.back(); } catch (e) {} } else pushed = false;
   springTo(H, 1, 0.3, () => { sheet.style.visibility = "hidden"; scrim.style.pointerEvents = "none"; document.documentElement.style.overflow = ""; mode = ""; back && back.focus && back.focus({ preventScroll: true }); then && then(); });
 }
 scrim.addEventListener("click", () => closeSheet());
+addEventListener("popstate", () => { if (open) closeSheet(0, null, true); else pushed = false; });
 $("#sClose").addEventListener("click", () => closeSheet());
 addEventListener("keydown", e => { if (e.key === "Escape" && open) closeSheet(); });
 const grab = $("#grab"); let dr = null;
@@ -466,8 +479,9 @@ function dishSheet(c, it, from) {
 function indexSheet(from) { openSheet("Categorie", `<div class="ix-grid">${indexHtml()}</div>`, from, "index"); }
 function drawFilters() {
   const n = cats.reduce((s, c) => s + visible(c).length, 0);
-  sbody.innerHTML = `<div class="s-blk" style="margin-top:6px"><p class="s-lbl">Escludi allergeni</p><div class="f-grid">${ALL_A.map(a => `<button class="tog ex press" data-ex="${esc(a)}" aria-pressed="${st.ex.has(a)}">${esc(SHORT[a] || a)}</button>`).join("")}</div></div>
+  sbody.innerHTML = `<div class="s-blk" style="margin-top:6px"><p class="s-lbl">Nascondi i piatti che contengono</p><div class="f-grid">${ALL_A.map(a => `<button class="tog ex press" data-ex="${esc(a)}" aria-pressed="${st.ex.has(a)}">${esc(SHORT[a] || a)}</button>`).join("")}</div></div>
     ${ALL_T.length ? `<div class="s-blk"><p class="s-lbl">Mostra solo</p><div class="f-grid">${ALL_T.map(t => `<button class="tog press" data-only="${esc(t)}" aria-pressed="${st.only.has(t)}">${t === "Piccante" ? ico("chili") : ""}${esc(t)}</button>`).join("")}</div></div>` : ""}
+    <p class="f-note">I piatti senza allergeni indicati restano visibili e sono segnalati. Per allergie gravi chiedi sempre al personale.</p>
     <div class="f-act"><button class="b-ghost press" data-clear>Azzera</button><button class="b-main press" data-done>Mostra ${n} ${n === 1 ? "risultato" : "risultati"}</button></div>`;
 }
 function langSheet(from) {
@@ -495,7 +509,7 @@ document.addEventListener("click", e => {
   if (mode === "lang") { const l = e.target.closest("[data-lang]"); if (l && l.dataset.lang === "en") { closeSheet(); toast("In questa anteprima il menù è solo in italiano."); } else if (l) closeSheet(); }
 });
 $("#allBtn").onclick = e => indexSheet(e.currentTarget);
-$("#filterBtn").onclick = e => { openSheet("Filtri", "", e.currentTarget, "filters"); drawFilters(); H = sheet.getBoundingClientRect().height + 40; };
+document.querySelectorAll(".fbtn").forEach(b => b.onclick = e => { openSheet("Filtri", "", e.currentTarget, "filters"); drawFilters(); H = sheet.getBoundingClientRect().height + 40; });
 $("#langBtn").onclick = e => langSheet(e.currentTarget);
 $("#q").addEventListener("input", e => { st.q = e.target.value.trim(); render(); });
 
