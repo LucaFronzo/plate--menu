@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#6E1410">
+  <title>Good Morning, Vietnam · Menù pranzo</title>
+  <!-- Font: in produzione meglio ospitarli sul nostro dominio (vedi README.md, "Font") -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap">
+  <link rel="stylesheet" href="menu-skin.css">
+  <style>html, body { margin: 0; background: #F7F4F3; }</style>
+</head>
+<body>
+  <!-- Unico contenitore: la skin costruisce tutto qui dentro -->
+  <div id="menu"></div>
+
+  <script src="menu-skin.js"></script>
+  <script>
+    // Pagina di esempio. In produzione il JSON arriva dal backend (inline o da API)
+    // e i colori sono quelli custom del locale. Servire la cartella con:
+    //   python3 -m http.server 8000   →   http://localhost:8000/
+    fetch("example/menu-pranzo.json")
+      .then(r => r.json())
+      .then(data => PlateformMenuSkin.mount(document.getElementById("menu"), {
+        data,
+        colors: { primary: "#6E1410", accent: "#F5A81C" },
+        logo: { src: "example/logo.png", mode: "tint" },
+        bookingUrl: "https://goodmorningvietnam.plateform.app/",
+        languages: [{ code: "it", label: "Italiano", current: true }],
+        theme: "auto"
+      }))
+      .catch(() => {
+        document.getElementById("menu").textContent =
+          "Apri questa pagina da un server locale (python3 -m http.server), non direttamente dal file.";
+      });
+  </script>
+</body>
+</html>

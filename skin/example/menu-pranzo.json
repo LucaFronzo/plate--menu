@@ -1,0 +1,779 @@
+{
+  "restaurant": {
+    "name": "Good Morning, Vietnam",
+    "address": "Piazza dei Tribunali, 6a, 40124 Bologna BO, Italia"
+  },
+  "menu": {
+    "name": "Pranzo"
+  },
+  "categories": [
+    {
+      "name": "Involtini ed insalate 🥙",
+      "notes": [
+        {
+          "title": "Piatti da condividere:",
+          "text": "Nella tradizione vietnamita, i pasti sono momenti di condivisione. Involtini croccanti, insalate fresche e sapori autentici vengono serviti al centro della tavola, da gustare insieme per vivere appieno lo spirito conviviale del Vietnam.",
+          "allergens": []
+        }
+      ],
+      "items": [
+        {
+          "name": "Cha gio chay (finger food)",
+          "price": 8.0,
+          "tags": [
+            "Vegetariano"
+          ],
+          "description": "Due involtini fritti di sfoglia croccante ripieni di verdure e piselli serviti con salsa leggermente piccante\n\nInvoltino \"Single Pride\": porzione da un involtino 4,5€\n\nCiotolina di salsa extra 1€",
+          "allergens": [
+            "Glutine",
+            "Uova",
+            "Sedano"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Cha gio thit (finger food)",
+          "price": 8.0,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Due involtini fritti di sfoglia di riso croccante ripieni di carne di maiale, funghi asiatici ed erbe aromatiche. Serviti con salsa di pesce \"nuoc mam\"\n\nInvoltino \"Single Pride\": porzione da un involtino 4,5€\n\nCiotolina di salsa extra 1€",
+          "allergens": [
+            "Glutine",
+            "Uova",
+            "Pesce",
+            "Sedano"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Goi xoai ga",
+          "price": 9.5,
+          "tags": [],
+          "description": "Insalata di mango, lattuga iceberg, carote, fiocchi di cipolla fritta, straccetti di pollo, arachidi, erbe aromatiche, in salsa di pesce agrodolce. Servita con cialde croccanti di gamberetti",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Cialde croccanti di gamberetti",
+          "price": 1.5,
+          "tags": [],
+          "description": "Cialde croccanti di gamberetti",
+          "allergens": [
+            "Crostacei"
+          ],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Pho (Brodo) 🍜",
+      "notes": [
+        {
+          "title": "Il Pho:",
+          "text": "Brodo chiaro e profumato cotto lentamente per ore con ossa di manzo, spezie ed aromi naturali. \nPiatto iconico della cucina vietnamita conosciuto in tutto il mondo, leggero ma ricco di gusto.",
+          "allergens": []
+        }
+      ],
+      "items": [
+        {
+          "name": "Pho bo",
+          "price": 13.5,
+          "tags": [
+            "Specialità",
+            "Senza glutine"
+          ],
+          "description": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, carpaccio di manzo, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta",
+          "allergens": [
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Pho bo gan",
+          "price": 15.0,
+          "tags": [
+            "Specialità",
+            "Senza glutine"
+          ],
+          "description": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, carpaccio e nervetti di manzo cotti nel brodo per 6 ore, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta",
+          "allergens": [
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Pho dau phu",
+          "price": 12.5,
+          "tags": [],
+          "description": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, tofu fritto, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta",
+          "allergens": [
+            "Glutine",
+            "Soia"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Pho ga",
+          "price": 13.0,
+          "tags": [
+            "Specialità",
+            "Senza glutine"
+          ],
+          "description": "Brodo di carne tradizionale vietnamita con tagliatelle di riso, pollo stufato, spezie vietnamite e cipolla\nCoriandolo disponibile su richiesta",
+          "allergens": [
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Piatti con riso 🍛",
+      "notes": [
+        {
+          "title": "Riso:",
+          "text": "Il riso non è solo un alimento, è il cuore della vita vietnamita. In ogni pasto, dalla colazione alla cena, il riso bianco al vapore rappresenta la base di ogni piatto.\nPer sapori diversi segui l'etichetta \"specialità\". \nPer sapori delicati segui il latte di cocco.",
+          "allergens": []
+        }
+      ],
+      "items": [
+        {
+          "name": "Com bo cari",
+          "price": 13.5,
+          "tags": [],
+          "description": "Ciotola di riso bianco accompagnato da fettine di manzo al curry, latte di cocco, verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia",
+            "Sedano"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com bo ngu vi",
+          "price": 13.5,
+          "tags": [],
+          "description": "Ciotola di riso bianco accompagnato da fettine di manzo con mix di spezie alla vietnamita, verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia",
+            "Sedano",
+            "Sesamo"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com ga cari",
+          "price": 13.0,
+          "tags": [],
+          "description": "Ciotola di riso bianco accompagnato da straccetti di coscia di pollo stufato, curry, latte di cocco, verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia",
+            "Sedano"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com ga sate",
+          "price": 13.0,
+          "tags": [
+            "Specialità",
+            "Piccante"
+          ],
+          "description": "Ciotola di riso bianco accompagnato da straccetti di coscia di pollo stufato in salsa satè (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com suon xa xiu",
+          "price": 15.0,
+          "tags": [
+            "Novità",
+            "Specialità"
+          ],
+          "description": "Ciotola di riso bianco accompagnato da costine di maiale al forno marinate in salsa \"xa xiu\", con verdure fresche e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Soia",
+            "Sesamo"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com rau cari",
+          "price": 12.5,
+          "tags": [],
+          "description": "Ciotola di riso bianco accompagnato da verdure saltate al wok al curry, tofu fritto, latte di cocco e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia",
+            "Sedano"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Com thit rang",
+          "price": 13.5,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Ciotola di riso bianco accompagnato da coppa di suino marinata al lemon grass, sesamo, erbe aromatiche e verdure fresche. Servita con salsa di pesce \"nuoc mam\"",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia",
+            "Sesamo"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com rau sate",
+          "price": 12.5,
+          "tags": [
+            "Piccante",
+            "Specialità"
+          ],
+          "description": "Ciotola di riso bianco accompagnato da tofu fritto in salsa sate (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Soia"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Com thit heo xao sate",
+          "price": 13.0,
+          "tags": [
+            "Piccante",
+            "Specialità"
+          ],
+          "description": "Ciotola di riso bianco accompagnato da fettine di coppa di suino marinate al lemon grass in salsa sate (aglio, scalogno, peperoncino, lemon grass, zenzero), verdure e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Com trang",
+          "price": 3.0,
+          "tags": [],
+          "description": "Ciotola di riso bianco",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Noodles di riso",
+      "notes": [
+        {
+          "title": "Bun xao:",
+          "text": "I Bun, a differenza delle tagliatelle, sono lunghi e sottili, vengono saltati al wok con verdure croccanti, erbe aromatiche e salsa di pesce \"nuoc mam\". Piatto tipico e rinfrescante della cucina del Sud del Vietnam, leggero e profumato, perfetto in ogni stagione.",
+          "allergens": []
+        }
+      ],
+      "items": [
+        {
+          "name": "Bun xao bo",
+          "price": 13.5,
+          "tags": [],
+          "description": "Vermicelli di riso saltati al wok con straccetti di manzo, verdure fresche, arachidi, fiocchi di cipolla fritta. Serviti con salsa di pesce \"nuoc mam\"",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi",
+            "Soia",
+            "Sedano",
+            "Sesamo"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Bun xao rau",
+          "price": 12.5,
+          "tags": [],
+          "description": "Vermicelli di riso saltati al wok con tofu fritto, verdure, arachidi e fiocchi di cipolla fritta",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi",
+            "Soia",
+            "Sedano",
+            "Sesamo"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Bun thit nuong, cha gio",
+          "price": 15.0,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Vermicelli di riso tiepidi, pancetta di maiale marinata, verdure fresche, arachidi ed involtino cha gio thit. Serviti con salsa di pesce \"nuoc mam\" e cipollotti",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi",
+            "Soia",
+            "Sesamo"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Bun bo xao cari",
+          "price": 13.5,
+          "tags": [
+            "Specialità",
+            "Novità",
+            "Di stagione"
+          ],
+          "description": "Vermicelli di riso tiepidi, verdure fresche, straccetti di manzo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi",
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        },
+        {
+          "name": "Bun ga xao cari",
+          "price": 13.0,
+          "tags": [
+            "Specialità",
+            "Novità",
+            "Di stagione"
+          ],
+          "description": "Vermicelli di riso tiepidi, verdure fresche, straccetti di pollo saltato al curry, salsa di pesce, arachidi e fiocchi di cipolla fritta.",
+          "allergens": [
+            "Glutine",
+            "Pesce",
+            "Arachidi",
+            "Soia"
+          ],
+          "frozen": true,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Dolci 🧉🍧",
+      "notes": [],
+      "items": [
+        {
+          "name": "Che dau trang",
+          "price": 5.0,
+          "tags": [
+            "Specialità",
+            "Per due persone",
+            "Senza lattosio",
+            "Senza glutine"
+          ],
+          "description": "Riso glutinoso servito con crema al cocco e fagioli dall'occhiello nero",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Torta di riso glutinoso con ripieno di fagioli mungo e pandano",
+          "price": 3.0,
+          "tags": [
+            "Senza lattosio",
+            "Senza glutine"
+          ],
+          "description": "La torta di riso glutinoso ripiena di crema di fagioli mungo è una specialità tradizionale particolarmente apprezzata nelle province centrali e sud-occidentali del Vietnam. La parte esterna è soffice e liscia grazie all'impasto morbido in cui amido (di solito di tapioca) e margarina sono uniti alla farina di riso glutinoso. L'interno cremoso è una pasta di legumi che viene aromatizzata in vari modi, per esempio con scaglie di cocco grattugiato o con l'estratto di foglie di Pandano, pianta tropicale che dona una delicata dolcezza.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Acqua 💧",
+      "notes": [],
+      "items": [
+        {
+          "name": "Acqua naturale/frizzante Pejo in vetro 0,75cl",
+          "price": 2.5,
+          "tags": [],
+          "description": "",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Acqua mezzo litro nat/gas plastica",
+          "price": 1.5,
+          "tags": [],
+          "description": "",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Caffè Poli",
+          "price": 2.0,
+          "tags": [],
+          "description": "100% arabica",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Cold Brew - caffè freddo",
+      "notes": [],
+      "items": [
+        {
+          "name": "Pure Cold Brew Shot",
+          "price": 3.0,
+          "tags": [
+            "Di stagione"
+          ],
+          "description": "Caffè Specialty (monorigine Congo Shasha) a estrazione fredda (8 ore), servito in purezza su cubetti di ghiaccio. Naturalmente dolce, fruttato e dissetante, senza zuccheri aggiunti.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Spicy Coffee Mule",
+          "price": 5.5,
+          "tags": [],
+          "description": "L'incontro audace tra il nostro caffè Specialty e la nota piccante e frizzante del ginger beer. Servito con ghiaccio e una spruzzata di lime fresco. Un fine pasto (o break) sorprendentemente energizzante e dissetante.\n(100% Vegetale - Senza Glutine)",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Earl Grey Coffee (corretto con liquore)",
+          "price": 6.0,
+          "tags": [],
+          "description": "Un incontro inaspettato tra Oriente e Occidente: Caffè Specialty freddo ed eccezionale liquore artigianale all'Earl Grey. Una sinfonia estiva di note tostate e profumi di bergamotto, servita su ghiaccio.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Lapsang Smoke Coffee (corretto con liquore)",
+          "price": 6.0,
+          "tags": [],
+          "description": "Il nostro Caffè Specialty freddo incontra le note profondamente affumicate e legnose del pluripremiato liquore al tè Lapsang Souchong (Whistler's Storm). Un fine pasto sorprendente ed elegante per gli amanti dei sentori torbati. Servito con ghiaccio",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Esperienze analcoliche",
+      "notes": [],
+      "items": [
+        {
+          "name": "Best mango - 25cl",
+          "price": 3.0,
+          "tags": [],
+          "description": "Nettare di mango",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Gemellii - Ginger beer",
+          "price": 4.0,
+          "tags": [],
+          "description": "Un mix vibrante di zenzero piccante e della delicata dolcezza dell'agave - 200ml",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Bibo Runge - Riesling Zero Alcool",
+          "price": 6.0,
+          "tags": [],
+          "description": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Gemellii - Mojito analcolico servito con ghiaccio, lime e foglia di menta",
+          "price": 7.0,
+          "tags": [],
+          "description": "Ispirato al Brasile, questo Mojito Mocktail è una miscela leggera e rinvigorente di menta fresca, lime saporito e zucchero di canna, che offre un gusto frizzante, vibrante e rinfrescante dello spirito tropicale di Rio. Una celebrazione frizzante del ritmo e del sole in ogni sorso.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Birra 🍻",
+      "notes": [],
+      "items": [
+        {
+          "name": "Birra Saigon - 33cl",
+          "price": 6.5,
+          "tags": [],
+          "description": "Lager Premium a bassa fermentazione ottenuta da malto d'orzo, luppolo e riso.",
+          "allergens": [
+            "Glutine"
+          ],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Vini al calice 🥂",
+      "notes": [],
+      "items": [
+        {
+          "name": "Weingut Max Ferd. Richter - Riesling Trocken '25",
+          "price": 6.0,
+          "tags": [],
+          "description": "Germania Mosella - residuo zuccherino 6-8 g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Weingut Max Ferd. Richter - Riesling “Zeppelin” '25",
+          "price": 6.0,
+          "tags": [],
+          "description": "Germania Mosella - Residuo zuccherino 30g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Schloss Lieser - Riesling Spatlese '21",
+          "price": 8.0,
+          "tags": [],
+          "description": "Germania Mosella - Residuo zuccherino 73g\nPerfetto con il \"Pho\"",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Bibo Runge - Riesling Zero Alcool",
+          "price": 6.0,
+          "tags": [],
+          "description": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Vini in bottiglia 🍾",
+      "notes": [
+        {
+          "title": "Il Riesling della Mosella e la Cucina Vietnamita:",
+          "text": "la cucina vietnamita si distingue per la sua leggerezza, l'uso di erbe fresche, spezie delicate e una costante ricerca di equilibrio tra dolce, salato, acido e piccante. Il Riesling della Mosella è l'unico vino che si abbina perfettamente con i nostri piatti, grazie alla sua acidità, mineralità e dolcezza.",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ]
+        }
+      ],
+      "items": [
+        {
+          "name": "Weingut Max Ferd. Richter - Riesling “Zeppelin”  '25",
+          "price": 28.0,
+          "tags": [],
+          "description": "Germania Mosella - Residuo zuccherino 30g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Weingut Max Ferd. Richter - Riesling Trocken '25",
+          "price": 30.0,
+          "tags": [],
+          "description": "Germania Mosella - residuo zuccherino 6-8 g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Bibo Runge - Riesling Zero Alcool",
+          "price": 30.0,
+          "tags": [
+            "Novità"
+          ],
+          "description": "Un Riesling senza alcol che mantiene l'eleganza e la freschezza del vitigno, grazie a un'attenta tecnica di produzione. L'alcol è stato estratto a bassa pressione (sottovuoto) e successivamente è stato aggiunto un tocco di Riesling intenso. Al naso note di scorze di limone, accompagnate da aromi fruttati che ricordano la vivacità del Riesling. Colore oro tenue con riflessi verdognoli. Al palato il vino è elegante, con una piacevole persistenza che invita a un altro sorso.\nResiduo zuccherino 2,5 g",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Vini invecchiati 👵",
+      "notes": [],
+      "items": [
+        {
+          "name": "Schloss Lieser - W. Sonnnenuhr Spatlese '18",
+          "price": 50.0,
+          "tags": [],
+          "description": "Agricoltura sostenibile - Germania Mosella - Residuo zuccherino 85 g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Zilliken - Rausch Spatlese '11",
+          "price": 115.0,
+          "tags": [],
+          "description": "Agricoltura sostenibile - Germania Mosella - residuo zuccherino 70 g/l",
+          "allergens": [
+            "Anidride solforosa e solfiti"
+          ],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    },
+    {
+      "name": "Amari, liquori, distillati 🥃",
+      "notes": [],
+      "items": [
+        {
+          "name": "Vodka Vietnamita - Nep Moi",
+          "price": 5.0,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Vodka di riso, distillata da riso glutinoso appena raccolto, miscelata con vodka di grano per ottenere una gradazione alcolica al 39.5% Vol. Molto apprezzata dai consumatori locali, ma anche da giapponesi, coreani, e turisti provenienti da tutto il mondo, è diventata presto un simbolo della cultura vietnamita",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Bud Spencer \"The Legend\"",
+          "price": 5.0,
+          "tags": [],
+          "description": "Liquore alla cannella ed al peperoncino",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Nizurin",
+          "price": 5.0,
+          "tags": [],
+          "description": "Liquore alla nocciola piemontese (2100 bottiglie prodotte)",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Grappa \"La cristallina\"",
+          "price": 5.0,
+          "tags": [],
+          "description": "Grappa bianca di dolcetto giovane (1230 bottiglie prodotte)",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Grappa \"La magica\"",
+          "price": 6.0,
+          "tags": [],
+          "description": "Grappa di nebbiolo invecchiata (870 bottiglie prodotte)",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Liquore di Tè Lapsang Souchong",
+          "price": 7.0,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Whistler’s Storm: liquore dall’eleganza fumosa, un’acquavite lussuosa con sussurri di fumo di pino e un finale ricco e duraturo. Il Lapsang Souchong è famoso per il suo caratteristico sapore affumicato, ottenuto facendo essiccare le foglie di tè sui fuochi di legno di pino utilizza solo i migliori ingredienti naturali.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Vermouth Mu",
+          "price": 6.5,
+          "tags": [],
+          "description": "Sartine - ricetta classica - 1510 bottiglie prodotte - servito freddo",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        },
+        {
+          "name": "Liquore di Tè Earl Grey",
+          "price": 7.0,
+          "tags": [
+            "Specialità"
+          ],
+          "description": "Whistler's Storm:  raffinato liquore ispirato al celebre tè Earl Grey, pensato per chi ama le note aromatiche e agrumate del bergamotto integrate a un corpo morbido e vellutato.",
+          "allergens": [],
+          "frozen": false,
+          "photo": null
+        }
+      ]
+    }
+  ]
+}
